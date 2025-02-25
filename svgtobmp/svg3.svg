@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg enable-background="new 0 0 2014 1674.641" version="1.1" viewBox="0 0 2014 1674.641" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+    <rect  x="0" y="0" width="400" height="500"
+            fill="none"  stroke="blue"  stroke-width="5" />
+    <text x="20" y="35" stroke="red" stroke-width="1" class="small">My</text>
+    <text x="40" y="35" stroke="red" stroke-width="1" class="heavy">cat</text>
+    <text x="55" y="55" stroke="red" stroke-width="1" class="small">is</text>
+    <text x="65" y="55" stroke="red" stroke-width="1" class="Rrrrr">Grumpy!</text>
+</svg>

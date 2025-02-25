@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg enable-background="new 0 0 2014 1674.641" version="1.1" viewBox="0 0 2014 1674.641" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">
+		<path d="m44.883 1173.3c0 169.58 92.136 317.37 229.08 396.59v-793.53c-136.94 79.216-229.08 227.37-229.08 396.94z"/>		
+		<path d="m1740 776.38v793.53c136.94-79.214 229.08-227 229.08-396.59 1e-3 -169.57-92.133-317.73-229.08-396.94z"/>
+		
+		<text x="100" y="100" stroke="red" stroke-width="1" class="small">My</text>
+		<text x="200" y="100" stroke="red" stroke-width="1" class="heavy">cat</text>
+</svg>

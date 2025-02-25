@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg enable-background="new 0 0 192, 32" version="1.1" viewBox="0 0 192, 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg">		
+		
+		<g id="Paths" stroke-width="1" stroke="#aaaaaa" stroke-linejoin="round" stroke-linecap="round" fill="#ffff00">
+			<path id="path-1" d="M40,10L50,10L80,10L80,7L90,15L80,23L80,20L55,20L40,20L40,10"/>
+			<path id="path-2" d="M100,10L110,10L110,7L120,15L110,23L110,20L100,20"/>
+		</g>
+		<g id="Text" font-family="Noto Sans KR">
+			<text id="text-1" font-size="7" fill="#ff00ff" x="10" y="15">시작</text>
+			<text id="text-2" font-size="5" fill="#00ffff" x="130" y="15">소요시간</text>
+		</g>
+		<g id="Polygon" stroke-width="1" stroke="#aaaaaa">
+			<polygon fill="#ff00ff" points="150,10 155,10 160,10 160,7 170,15 160,23 160,20 155,20 150,20"/>
+		</g>
+</svg>

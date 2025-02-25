@@ -1,0 +1,3 @@
+[submodule "datastructure"]
+	path = datastructure
+	url = https://github.com/tuckersGo/datastructure.git

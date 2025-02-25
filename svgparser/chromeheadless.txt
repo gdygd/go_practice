@@ -1,0 +1,3 @@
+google-chrome-stable --headless --disable-gpu --screenshot --window-size=384,1696 ./pathsvg__.svg
+google-chrome-stable --headless --disable-gpu --screenshot --window-size=384,64 ./pathsvg__.svg
+google-chrome-stable --headless --disable-gpu --screenshot=./img/svgimg.png --window-size=384,64 ./pathsvg__.svg

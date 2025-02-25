@@ -1,0 +1,95 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"syscall"
+	"time"
+)
+
+func main() {
+	fmt.Printf("client... \n")
+
+	// 소켓 생성
+	sockfd, err := syscall.Socket(syscall.AF_INET, syscall.SOCK_STREAM, 0)
+	if err != nil {
+		fmt.Println("Failed to create socket:", err)
+		return
+	}
+
+	// 서버 주소 설정
+	serverAddr := &syscall.SockaddrInet4{
+		Port: 23000,
+		Addr: [4]byte{127, 0, 0, 1},
+	}
+
+	// epoll 생성
+	epollFd, err := syscall.EpollCreate1(0)
+	if err != nil {
+		log.Fatal("epoll create failed:", err)
+	}
+
+	// epoll 이벤트 등록
+	event := syscall.EpollEvent{
+		Events: syscall.EPOLLIN,
+		Fd:     int32(sockfd),
+	}
+
+	// 서버에 연결
+	err = syscall.Connect(sockfd, serverAddr)
+	if err != nil {
+		fmt.Println("Failed to connect:", err)
+		return
+	} else {
+		fmt.Printf("connected..")
+	}
+	defer syscall.Close(sockfd)
+
+	// epoll 이벤트 처리 루프
+	events := make([]syscall.EpollEvent, 10)
+
+	// 소켓 epoll 이벤트 등록
+	err = syscall.EpollCtl(epollFd, syscall.EPOLL_CTL_ADD, sockfd, &event)
+	if err != nil {
+		log.Println("epoll ctl add failed:", err)
+	}
+
+	for {
+		n, err := syscall.EpollWait(epollFd, events, 100)
+		if err != nil {
+			//log.Fatal("epoll wait failed:", err)
+			log.Printf("epoll wait failed %v, %d", err, n)
+		}
+
+		fmt.Printf("epoll wait n : %d\n", n)
+
+		for i := 0; i < n; i++ {
+
+			// 서버로부터 데이터 수신
+
+			buffer := make([]byte, 1024)
+			n, err := syscall.Read(sockfd, buffer)
+			if err != nil {
+				log.Println("read failed:", err)
+				syscall.EpollCtl(epollFd, syscall.EPOLL_CTL_DEL, sockfd, nil)
+				syscall.Close(sockfd)
+				continue
+			}
+
+			data := buffer[:n]
+			log.Println("Received data:", string(data))
+
+			// 서버에 데이터 전송
+			_, err = syscall.Write(sockfd, data)
+			if err != nil {
+				log.Println("write failed:", err)
+				syscall.EpollCtl(epollFd, syscall.EPOLL_CTL_DEL, sockfd, nil)
+				syscall.Close(sockfd)
+				continue
+			}
+		}
+
+		time.Sleep(time.Millisecond * 500)
+
+	}
+}
