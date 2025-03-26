@@ -33,22 +33,6 @@ func quadraticEquation2(a, b, h, k, m, c float64) (float64, float64, float64, fl
 	return A, B, C, D
 }
 
-// func quadraticEquation(a, b, h, k, m, c float64) (float64, float64, float64, float64) {
-// 	// A 계수: a²m² + b²
-// 	A := a*a*m*m + b*b
-
-// 	// B 계수: -2b²h - 2a²mk
-// 	B := -2*b*b*h - 2*a*a*m*k
-
-// 	// C 계수: b²h² + a²c² - 2a²kc + a²k² - a²b²
-// 	C := b*b*h*h + a*a*c*c - 2*a*a*k*c + a*a*k*k - a*a*b*b
-
-// 	// 판별식 D = B² - 4AC
-// 	D := B*B - 4*A*C
-
-// 	return A, B, C, D
-// }
-
 func getLonRadius(meter int, lat float64) float64 {
 	// 경도반지름
 	angle := lat * math.Pi / 180.0 // To degree
