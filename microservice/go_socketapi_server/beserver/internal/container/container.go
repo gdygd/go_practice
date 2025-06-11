@@ -2,10 +2,10 @@ package container
 
 import (
 	"fmt"
+	"server/beserver/internal/db"
+	"server/beserver/internal/db/mdb"
+	"server/beserver/internal/obj"
 	"server/config"
-	"server/restserver/internal/db"
-	"server/restserver/internal/db/mdb"
-	"server/restserver/internal/obj"
 	"server/shmobj"
 )
 

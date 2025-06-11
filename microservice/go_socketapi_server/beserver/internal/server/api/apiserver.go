@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"server/beserver/internal/container"
+	"server/beserver/internal/logger"
+	"server/beserver/internal/service"
+	apiserv "server/beserver/internal/service/api"
 	"server/config"
-	"server/restserver/internal/container"
-	"server/restserver/internal/logger"
-	"server/restserver/internal/service"
-	apiserv "server/restserver/internal/service/api"
 	"server/token"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,7 @@ import (
 
 // Server serves HTTP requests for our banking service.
 type Server struct {
+	wg         *sync.WaitGroup
 	srv        *http.Server
 	config     *config.Config
 	tokenMaker token.Maker
@@ -25,7 +27,7 @@ type Server struct {
 	service    service.ApiServiceInterface
 }
 
-func NewServer(ct *container.Container) (*Server, error) {
+func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
 
 	// init service
 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
@@ -35,6 +37,7 @@ func NewServer(ct *container.Container) (*Server, error) {
 		return nil, fmt.Errorf("cannot create token maker: %w", err)
 	}
 	server := &Server{
+		wg:         wg,
 		config:     ct.Config,
 		tokenMaker: tokenMaker,
 		service:    apiservice,
@@ -79,6 +82,7 @@ func (server *Server) Start() error {
 func (server *Server) Shutdown() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+	defer server.wg.Done()
 	if err := server.srv.Shutdown(ctx); err != nil {
 		logger.Apilog.Error("Server Shutdown:", err)
 		return err

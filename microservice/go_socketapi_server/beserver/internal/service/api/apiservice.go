@@ -2,9 +2,9 @@ package service
 
 import (
 	"fmt"
-	"server/restserver/internal/db"
-	"server/restserver/internal/obj"
-	"server/restserver/internal/service"
+	"server/beserver/internal/db"
+	"server/beserver/internal/obj"
+	"server/beserver/internal/service"
 )
 
 type ApiService struct {

@@ -7,4 +7,4 @@ test:
 server:
 	cd ./cli && make build
 	cd ./mpserver && make build
-	cd ./restserver && make build
+	cd ./beserver && make build

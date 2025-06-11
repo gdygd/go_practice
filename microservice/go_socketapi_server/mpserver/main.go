@@ -35,7 +35,7 @@ const sysenvini = "./sys_env.ini"
 // Local
 // ------------------------------------------------------------------------------
 var isAleayProcess bool = false
-var PRC_DESC = []string{"mpserver", "./restserver"}
+var PRC_DESC = []string{"mpserver", "./beserver"}
 var prcArgv = [][]string{{""}, {""}}
 
 var pSegment *shm.Segment

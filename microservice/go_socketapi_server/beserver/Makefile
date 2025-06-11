@@ -10,4 +10,4 @@ test:
 	go test -v
 
 build:
-	go build -o ../bin/restserver main.go
+	go build -o ../bin/beserver main.go
