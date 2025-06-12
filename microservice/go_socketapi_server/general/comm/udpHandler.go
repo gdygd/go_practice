@@ -20,9 +20,10 @@ type UdpHandler struct {
 	udp       net.PacketConn
 	udpAddr   net.Addr
 	connected atomic.Bool
+	connMu    sync.RWMutex // 연결 변경용 락
 }
 
-var udpMutex = &sync.Mutex{}
+// var udpMutex = &sync.Mutex{}
 
 func newUdpHandler(name string, sendport, recvport int, addr string) UdpHandler {
 	return UdpHandler{
@@ -47,6 +48,14 @@ func (u *UdpHandler) SetCommEnv(name string, sendport, recvport int, addr string
 // Connect
 // ---------------------------------------------------------------------------
 func (u *UdpHandler) Connect() (bool, error) {
+	u.connMu.Lock()
+	defer u.connMu.Unlock()
+
+	if u.udp != nil {
+		_ = u.udp.Close()
+		u.udp = nil
+	}
+
 	target := fmt.Sprintf("%s:%d", u.addr, u.sendport)
 	udpAddr, err := net.ResolveUDPAddr("udp", target)
 	if err != nil {
@@ -75,6 +84,10 @@ func (u *UdpHandler) Send(data []byte) (int, error) {
 	if !u.connected.Load() {
 		return 0, fmt.Errorf("not connected")
 	}
+
+	u.connMu.RLock()
+	defer u.connMu.RUnlock()
+
 	if u.udpAddr == nil {
 		return 0, fmt.Errorf("destination address not set")
 	}
@@ -93,13 +106,16 @@ func (u *UdpHandler) Read(data []byte) (int, error) {
 		return 0, fmt.Errorf("not connected")
 	}
 
+	u.connMu.RLock()
+	defer u.connMu.RUnlock()
+
 	cnt, addr, err := u.udp.ReadFrom(data)
 	if err != nil {
 		u.connected.Store(false)
 		return cnt, err
 	}
 
-	u.udpAddr = addr // 최근 응답한 송신자 기준으로 주소 갱신
+	u.udpAddr = addr
 	return cnt, nil
 }
 
@@ -110,19 +126,19 @@ func (u *UdpHandler) IsConnected() bool {
 // ---------------------------------------------------------------------------
 // Close
 // ---------------------------------------------------------------------------
-func (u *UdpHandler) Close() {
-	if !u.connected.Load() {
-		log.Printf("UDP connection already closed for %s:%d", u.addr, u.recvport)
+func (u *UdpHandler) Close() error {
+	u.connMu.Lock()
+	defer u.connMu.Unlock()
 
-		return
-	}
-
-	u.connected.Store(false)
 	if u.udp != nil {
-		if err := u.udp.Close(); err != nil {
-			log.Printf("UDP close error: %v", err)
-		} else {
-			log.Printf("UDP connection closed for %s:%d", u.addr, u.recvport)
+		err := u.udp.Close()
+		u.udp = nil
+		u.connected.Store(false)
+
+		if err != nil {
+			return fmt.Errorf("UDP close error: %v", err)
 		}
+		log.Printf("[UdpHandler] Connection closed for %s:%d", u.addr, u.recvport)
 	}
+	return nil
 }

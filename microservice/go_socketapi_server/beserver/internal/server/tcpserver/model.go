@@ -21,7 +21,8 @@ type SStServer struct {
 	Tcp    *comm.TcpHandler
 
 	txQueue chan []byte
-	rxQueue chan []byte
+
+	recvBuf []byte
 }
 
 /*

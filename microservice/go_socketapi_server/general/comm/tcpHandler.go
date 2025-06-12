@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -19,9 +20,10 @@ type TcpHandler struct {
 
 	tcp       net.Conn
 	connected atomic.Bool
+	connMu    sync.RWMutex // 연결 변경용 락
 }
 
-var tcpMutex = &sync.Mutex{}
+// var tcpMutex = &sync.Mutex{}
 
 func newTcpHandler(name string, port int, addr string) TcpHandler {
 	return TcpHandler{
@@ -48,16 +50,24 @@ func (t *TcpHandler) GetAddress() string {
 // Connect
 // ---------------------------------------------------------------------------
 func (t *TcpHandler) Connect() (bool, error) {
-	target := fmt.Sprintf("%s:%d", t.addr, t.port)
-	conn, err := net.DialTimeout("tcp", target, time.Second*1)
+	t.connMu.Lock()
+	defer t.connMu.Unlock()
+
+	if t.tcp != nil {
+		_ = t.tcp.Close()
+		t.tcp = nil
+	}
+
+	target := net.JoinHostPort(t.addr, strconv.Itoa(t.port))
+	conn, err := net.DialTimeout("tcp", target, 3*time.Second)
 	if err != nil {
-		log.Printf("Connect error to %s: %v", target, err)
-		return false, err
+		t.connected.Store(false)
+		return false, fmt.Errorf("connect to %s failed: %w", target, err)
 	}
 
 	t.tcp = conn
 	t.connected.Store(true)
-	log.Printf("Connected to %s", target)
+	log.Printf("[TcpHandler] Connected to %s", target)
 	return true, nil
 }
 
@@ -68,11 +78,20 @@ func (t *TcpHandler) Send(data []byte) (int, error) {
 	if !t.connected.Load() {
 		return 0, fmt.Errorf("not connected")
 	}
-	cnt, err := t.tcp.Write(data)
+
+	t.connMu.RLock()
+	defer t.connMu.RUnlock()
+
+	if t.tcp == nil {
+		t.connected.Store(false)
+		return 0, fmt.Errorf("connection is nil")
+	}
+
+	n, err := t.tcp.Write(data)
 	if err != nil {
 		t.connected.Store(false)
 	}
-	return cnt, err
+	return n, err
 }
 
 // ---------------------------------------------------------------------------
@@ -82,11 +101,20 @@ func (t *TcpHandler) Read(data []byte) (int, error) {
 	if !t.connected.Load() {
 		return 0, fmt.Errorf("not connected")
 	}
-	cnt, err := t.tcp.Read(data)
+
+	t.connMu.RLock()
+	defer t.connMu.RUnlock()
+
+	if t.tcp == nil {
+		t.connected.Store(false)
+		return 0, fmt.Errorf("connection is nil")
+	}
+
+	n, err := t.tcp.Read(data)
 	if err != nil {
 		t.connected.Store(false)
 	}
-	return cnt, err
+	return n, err
 }
 
 func (t *TcpHandler) IsConnected() bool {
@@ -97,20 +125,18 @@ func (t *TcpHandler) IsConnected() bool {
 // ClearEnv
 // ---------------------------------------------------------------------------
 func (t *TcpHandler) Close() error {
-	if !t.connected.Load() {
-		return fmt.Errorf("connection already closed for %s:%d", t.addr, t.port)
-	}
+	t.connMu.Lock()
+	defer t.connMu.Unlock()
 
-	t.connected.Store(false)
 	if t.tcp != nil {
-		if err := t.tcp.Close(); err != nil {
+		err := t.tcp.Close()
+		t.tcp = nil
+		t.connected.Store(false)
 
-			return err
-		} else {
-			// log.Printf("Closed connection to %s:%d", t.addr, t.port)
-			return nil
+		if err != nil {
+			return fmt.Errorf("tcp close error: %w", err)
 		}
+		log.Printf("[TcpHandler] Closed connection to %s:%d", t.addr, t.port)
 	}
-
 	return nil
 }

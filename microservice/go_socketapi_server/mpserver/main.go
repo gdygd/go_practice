@@ -8,6 +8,7 @@ import (
 	"server/config"
 	"server/shmobj"
 	"strconv"
+	"sync"
 	"syscall"
 	"time"
 	"unsafe"
@@ -238,6 +239,10 @@ func initEnv() bool {
 		return false
 	}
 
+	if !startProcess() {
+		return false
+	}
+
 	Mlog.Info("[main]initEnv ok")
 
 	// Register PID
@@ -247,6 +252,62 @@ func initEnv() bool {
 	SetDebugLv()
 
 	return true
+}
+
+func startProcess() bool {
+	Mlog.Print(2, "start process..")
+	var isok bool = true
+	var wg sync.WaitGroup
+	wg.Add(1)
+
+	for idx := 1; idx < shmobj.MAX_PROCESS; idx++ {
+		ptrPrc := &SharedMem.Process[idx]
+		ptrPrc.Start2("-mode=release")
+	}
+
+	//check running state
+
+	var PRC_CNT = shmobj.MAX_PROCESS - 1
+	var index int = 1
+	var prcstate int = 1
+	var state int = 0
+	for i := 0; i < shmobj.MAX_PROCESS; i++ {
+		state |= 1 << i
+	}
+
+	curtm := time.Now()
+	for {
+		if time.Since(curtm) > time.Second*3 {
+			Mlog.Error("child process start error... state(%X)", state)
+			isok = false
+			break
+		}
+
+		idx := (index % PRC_CNT) + 1
+		ptrPrc := &SharedMem.Process[idx]
+		if ptrPrc == nil {
+			index++
+			continue
+		}
+
+		if ptrPrc.RunBase.Active {
+			prcstate |= 1 << idx
+
+		} else {
+			continue
+		}
+
+		if state == prcstate {
+			Mlog.Print(2, "All child process start")
+			break
+		}
+		time.Sleep(time.Millisecond * 100)
+
+		index++
+	}
+
+	return isok
+
 }
 
 func manageProcess() {
