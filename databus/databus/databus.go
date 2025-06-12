@@ -22,7 +22,7 @@ func NewDataBus() *DataBus {
 }
 
 func (bus *DataBus) Subscribe(topic string) <-chan Message {
-	ch := make(chan Message, 10) // 버퍼드 채널
+	ch := make(chan Message, 10) // 버퍼 채널
 	bus.mu.Lock()
 	defer bus.mu.Unlock()
 
