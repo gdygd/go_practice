@@ -4,11 +4,7 @@ import (
 	"databus/databus"
 	"fmt"
 	"log"
-	"math/rand"
-	"os"
-	"os/signal"
 	"sync"
-	"syscall"
 	"time"
 )
 
@@ -16,16 +12,26 @@ var bus *databus.DataBus
 
 func App1(wg *sync.WaitGroup) {
 	defer wg.Done()
+
 	// time.Sleep(time.Second * 2)
 
 	app1Ch := bus.Subscribe("app1")
+	defer func() {
+		bus.Unsubscribe("app1", app1Ch)
+	}()
 
+	var count int = 0
 	for {
 		select {
 		case msg := <-app1Ch:
-			log.Println("[APP1] Received:", msg.Data)
+			log.Println("\t [APP1] Received:", msg.Data)
 		default:
 
+		}
+		count++
+		if count > 100 {
+			log.Println("APP1 종료.")
+			break
 		}
 		time.Sleep(time.Millisecond * 100)
 	}
@@ -44,7 +50,7 @@ func App2(wg *sync.WaitGroup) {
 		default:
 
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 1000)
 	}
 
 }
@@ -61,7 +67,7 @@ func App3(wg *sync.WaitGroup) {
 		default:
 
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 300)
 	}
 
 }
@@ -71,11 +77,11 @@ func Producer(wg *sync.WaitGroup) {
 
 	var arrchannel []string = []string{"app1", "app2", "app3"}
 	for i := 0; i < 100; i++ {
-		idx := rand.Intn(3)
-		chann := arrchannel[idx]
+		// idx := rand.Intn(3)
+		chann := arrchannel[0]
 		data := fmt.Sprintf("%s, data (%d)", chann, i)
 
-		log.Printf("Publish app:[%s] data:[%s]", chann, data)
+		log.Printf("#Publish app:[%s] data:[%s]", chann, data)
 
 		msg := databus.Message{
 			Topic: chann,
@@ -83,7 +89,7 @@ func Producer(wg *sync.WaitGroup) {
 		}
 		bus.Publish(msg)
 
-		time.Sleep(time.Millisecond * 200)
+		time.Sleep(time.Millisecond * 100)
 	}
 
 }
@@ -97,23 +103,29 @@ func main() {
 	//----------------------------
 
 	var wg sync.WaitGroup
-	wg.Add(8)
+	wg.Add(4)
 
 	go App1(&wg)
-	go App2(&wg)
-	go App3(&wg)
+	// go App2(&wg)
+	// go App3(&wg)
 	go Producer(&wg)
 	go Producer(&wg)
 	go Producer(&wg)
-	go Producer(&wg)
-	go Producer(&wg)
+	// go Producer(&wg)
+	// go Producer(&wg)
 
 	wg.Wait()
 
-	log.Println("exit program..#1")
-	ch_signal := make(chan os.Signal, 10)
-	signal.Notify(ch_signal, syscall.SIGINT)
-	<-ch_signal
+	log.Println("==============================================exit program..#1==============================================")
+	// ch_signal := make(chan os.Signal, 10)
+	// signal.Notify(ch_signal, syscall.SIGINT)
+	// <-ch_signal
+
+	time.Sleep(time.Second * 5)
+
+	log.Println("==============================================exit program..#2==============================================")
+	bus.ShutDown()
+	log.Println("==============================================exit program..#3==============================================")
 
 	log.Println("exit program..#2")
 

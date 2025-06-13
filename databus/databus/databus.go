@@ -1,47 +1,65 @@
 package databus
 
-import (
-	"log"
-	"sync"
-)
+// import (
+// 	"log"
+// 	"sync"
+// )
 
-type Message struct {
-	Topic string
-	Data  interface{}
-}
+// type Message struct {
+// 	Topic string
+// 	Data  interface{}
+// }
 
-type DataBus struct {
-	subscribers map[string][]chan Message
-	mu          sync.RWMutex
-}
+// type DataBus struct {
+// 	subscribers map[string][]chan Message
+// 	mu          sync.RWMutex
+// }
 
-func NewDataBus() *DataBus {
-	return &DataBus{
-		subscribers: make(map[string][]chan Message),
-	}
-}
+// func NewDataBus() *DataBus {
+// 	return &DataBus{
+// 		subscribers: make(map[string][]chan Message),
+// 	}
+// }
 
-func (bus *DataBus) Subscribe(topic string) <-chan Message {
-	ch := make(chan Message, 10) // 버퍼 채널
-	bus.mu.Lock()
-	defer bus.mu.Unlock()
+// func (bus *DataBus) Subscribe(topic string) <-chan Message {
+// 	ch := make(chan Message, 10) // 버퍼 채널
+// 	bus.mu.Lock()
+// 	defer bus.mu.Unlock()
 
-	bus.subscribers[topic] = append(bus.subscribers[topic], ch)
-	return ch
-}
+// 	bus.subscribers[topic] = append(bus.subscribers[topic], ch)
+// 	return ch
+// }
 
-func (bus *DataBus) Publish(msg Message) {
-	bus.mu.RLock()
-	defer bus.mu.RUnlock()
+// func (bus *DataBus) Publish(msg Message) {
+// 	bus.mu.RLock()
+// 	defer bus.mu.RUnlock()
 
-	for _, ch := range bus.subscribers[msg.Topic] {
-		select {
-		case ch <- msg:
-		default:
-			log.Printf("Subscriber channel full for topic %s, dropping message", msg.Topic)
-		}
-	}
-}
+// 	for _, ch := range bus.subscribers[msg.Topic] {
+// 		select {
+// 		case ch <- msg:
+// 		default:
+// 			log.Printf("Subscriber channel full for topic %s, dropping message", msg.Topic)
+// 		}
+// 	}
+// }
+
+// func (bus *DataBus) replaceSubscribers(topic string) {
+// 	newChan := make(chan Message, CHAN_BUF)
+// 	bus.subscribers[topic] = []chan Message{newChan}
+// 	log.Printf("Replaced subscriber channels for topic %s", topic)
+// }
+
+// func clearChannel(chs []chan Message) {
+// 	for _, ch := range chs {
+// 		for {
+// 			select {
+// 			case <-ch:
+// 			default:
+// 				break
+// 			}
+// 		}
+// 	}
+// }
 
 /*
 
