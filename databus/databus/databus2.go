@@ -111,7 +111,7 @@ func (bus *DataBus) Publish(msg Message) {
 }
 
 func (bus *DataBus) ShutDown() {
-	log.Println("Shutting down Databus...")
+	log.Println("==============================================Shutting down Databus...==============================================")
 	close(bus.retryQueue)
 	close(bus.closed) // retryDispatcher 종료
 
@@ -126,7 +126,7 @@ func (bus *DataBus) ShutDown() {
 	}
 	bus.mu.Unlock()
 
-	log.Println("Shut down Databus!")
+	log.Println("==============================================Shut down Databus!==============================================")
 }
 
 func (bus *DataBus) clearRetryQueue() {

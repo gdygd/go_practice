@@ -114,6 +114,9 @@ func main() {
 	// go Producer(&wg)
 	// go Producer(&wg)
 
+	time.Sleep(time.Second * 3)
+	bus.ShutDown()
+
 	wg.Wait()
 
 	log.Println("==============================================exit program..#1==============================================")
@@ -121,11 +124,7 @@ func main() {
 	// signal.Notify(ch_signal, syscall.SIGINT)
 	// <-ch_signal
 
-	time.Sleep(time.Second * 5)
-
 	log.Println("==============================================exit program..#2==============================================")
-	bus.ShutDown()
-	log.Println("==============================================exit program..#3==============================================")
 
 	log.Println("exit program..#2")
 
