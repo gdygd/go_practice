@@ -15,6 +15,8 @@ type Config struct {
 	DBPasswd    string `mapstructure:"DB_PASSWD"`
 	DBSName     string `mapstructure:"DB_NAME"`
 
+	RedisAddr string `mapstructure:"REDIS_ADDR"`
+
 	HTTPServerAddress string `mapstructure:"HTTP_SERVER_ADDRESS"`
 	AllowOrigins      string `mapstructure:"HTTP_ALLOW_ORIGINS"`
 

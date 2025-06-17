@@ -7,7 +7,7 @@ import (
 	"go_redis/general"
 	"go_redis/mpserver/container"
 	"go_redis/mpserver/logger"
-	"log"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -167,17 +167,34 @@ func (app *Application) subscribeProcessState(ctx context.Context) {
 
 			raw, err := app.Ct.Rdb.Get(ctx, "prc_beserver")
 			if err != nil {
-				log.Fatalf("Redis Get Process error: %v", err)
+				Mlog.Error("Redis Get Process error: %v", err)
 			}
 
 			var result general.Process
 			err = json.Unmarshal([]byte(raw), &result)
 			if err != nil {
-				log.Fatalf("JSON unmarshal error: %v", err)
+				Mlog.Error("JSON unmarshal error: %v", err)
 			}
 
 			fmt.Printf("process Active(%v), ID:%v, name:%v, tm:%v \n", result.Active, result.ID, result.PrcName, result.LastTm)
 			app.Ct.Process[1] = result
+
+			//get terminate
+			valStr, err2 := app.Ct.Rdb.Get(ctx, "terminate")
+			if err2 != nil {
+				// log.Fatal(err2)
+				Mlog.Error("%v", err2)
+			}
+
+			sttTerminate, err2 := strconv.ParseBool(valStr)
+			if err2 != nil {
+				// log.Fatal("failed to parse bool:", err2)
+				Mlog.Error("failed to parse bool:", err2)
+			}
+			app.Ct.SysInfo.Terminate = sttTerminate
+			if app.Ct.SysInfo.Terminate {
+				Mlog.Print(4, "Request terminate..")
+			}
 
 			time.Sleep(time.Millisecond * 1000)
 		}

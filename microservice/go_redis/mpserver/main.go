@@ -154,10 +154,16 @@ func main() {
 	go mainApp.Start()
 	Mlog.Print(2, "App Start")
 
+	var isterminate bool = false
 	for {
 		if mainApp.IsAppClosed() {
 			Mlog.Print(2, "Quit main server.. ")
 			break
+		}
+
+		if !isterminate && ct.SysInfo.Terminate {
+			isterminate = true
+			clearEnv()
 		}
 	}
 
