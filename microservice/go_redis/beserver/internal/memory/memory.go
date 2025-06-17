@@ -2,9 +2,11 @@ package memory
 
 import (
 	"context"
+	"encoding/json"
 	"go_redis/beserver/internal/cache"
 	"go_redis/beserver/internal/logger"
 	"go_redis/general"
+	"log"
 	"sync"
 	"time"
 )
@@ -69,8 +71,14 @@ func (r *RedisDb) SetServerUtc() {
 }
 
 func (r *RedisDb) SetProcess(prc general.Process) {
+	logger.Mlog.Print(2, "Redis.. SetProcess")
 
-	if err := r.Rdb.Set(r.ctx, "prc_beserver", prc, 0); err != nil {
-		logger.Mlog.Error("Redis SetProcess error ")
+	data, err := json.Marshal(prc)
+	if err != nil {
+		log.Fatalf("JSON marshal error: %v", err)
+	}
+
+	if err := r.Rdb.Set(r.ctx, "prc_beserver", data, 0); err != nil {
+		logger.Mlog.Error("Redis SetProcess error %v", err)
 	}
 }

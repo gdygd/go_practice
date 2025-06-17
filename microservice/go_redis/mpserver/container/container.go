@@ -5,36 +5,48 @@ import (
 	"go_redis/config"
 	"go_redis/general"
 	"go_redis/general/cache"
+	"go_redis/mpserver/logger"
 	"os"
 )
 
 var PRC_DESC = []string{"mpserver", "./beserver"}
+
+type SystemInfo struct {
+	Terminate bool
+	SvtUtc    int64
+}
 
 // Main app 구동 구조체
 type Container struct {
 	Process []general.Process
 	Rdb     *cache.RedisClient
 	Config  *config.Config
-
-	Mlog *general.OLog2
+	SysInfo SystemInfo
 }
 
 var ct *Container
+var Mlog *general.OLog2
 
 func NewContainer() (*Container, error) {
+	ct = &Container{}
+	Mlog = logger.Mlog
+	Mlog.Print(2, "NewContainer ...#1")
 
 	config, err := initConfig()
 	if err != nil {
 		return nil, fmt.Errorf("config loading error..%v \n", err)
 	}
+	Mlog.Print(2, "NewContainer ...#2")
 	ct.Config = &config
+
+	Mlog.Print(2, "NewContainer ...#2.1")
 
 	ct.Rdb = cache.NewRedisClient("127.0.0.1:6379")
 
-	ct.Mlog = general.InitLogEnv("./log", "mpserver", 0)
-
+	Mlog.Print(2, "NewContainer ...#3")
 	initProcess()
 
+	Mlog.Print(2, "NewContainer ...#4")
 	return ct, nil
 }
 
@@ -45,7 +57,7 @@ func initConfig() (config.Config, error) {
 
 func initProcess() {
 
-	ct.Mlog.Print(2, "initProcess..")
+	Mlog.Print(2, "initProcess..")
 
 	ct.Process = make([]general.Process, len(PRC_DESC))
 	for idx, _ := range PRC_DESC {

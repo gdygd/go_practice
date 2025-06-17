@@ -52,9 +52,9 @@ func (app Application) Start() {
 	go app.ApiServer.Start()
 
 	// start app (sst server)
-	app.wg.Add(1)
-	logger.Mlog.Print(2, "Start SST server .. #1")
-	go app.SstServer.Start()
+	// app.wg.Add(1)
+	// logger.Mlog.Print(2, "Start SST server .. #1")
+	// go app.SstServer.Start()
 }
 
 func (app Application) ShutDown() {
@@ -63,9 +63,9 @@ func (app Application) ShutDown() {
 	app.ApiServer.Shutdown()
 	logger.Mlog.Print(2, "Shutdown Http server#2")
 
-	logger.Mlog.Print(2, "Shutdown SST server#1")
-	app.SstServer.Shutdown()
-	logger.Mlog.Print(2, "Shutdown SST server#2")
+	// logger.Mlog.Print(2, "Shutdown SST server#1")
+	// app.SstServer.Shutdown()
+	// logger.Mlog.Print(2, "Shutdown SST server#2")
 }
 
 func (app Application) CheckAppState() {

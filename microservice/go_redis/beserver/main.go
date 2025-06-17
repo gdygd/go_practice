@@ -51,7 +51,8 @@ func sigHandler(chSig chan os.Signal) {
 			logger.Mlog.Print(2, "[server]SIGHUP(%d)\n", signal)
 		case syscall.SIGINT:
 			logger.Mlog.Print(2, "[server]SIGINT(%d)\n", signal)
-			// terminate = true
+			shudownApp()
+			terminate = true
 			// os.Exit(0)
 		case syscall.SIGTERM:
 			logger.Mlog.Print(2, "SIGTERM(%d)\n", signal)
@@ -62,7 +63,6 @@ func sigHandler(chSig chan os.Signal) {
 			terminate = true
 		case syscall.SIGUSR1:
 			logger.Mlog.Print(2, "SIGUSR1(%d)\n", signal)
-			// terminate = true
 			go shudownApp()
 			// os.Exit(0)
 		default:
@@ -201,7 +201,7 @@ func main() {
 	}
 
 	for ok {
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 1000)
 		if terminate {
 			logger.Mlog.Print(2, "Quit server proces .. ")
 			break

@@ -2,6 +2,7 @@ package cache
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/redis/go-redis/v9"
@@ -12,6 +13,7 @@ type RedisClient struct {
 }
 
 func NewRedisClient(addr string) *RedisClient {
+	log.Printf("NewRedisClient.. %s \n", addr)
 	rdb := redis.NewClient(&redis.Options{
 		Addr: addr,
 		DB:   0,

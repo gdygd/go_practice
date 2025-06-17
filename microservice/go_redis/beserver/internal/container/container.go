@@ -15,7 +15,6 @@ type Container struct {
 	Config *config.Config
 	DbHnd  db.DbHandler
 	ObjDb  *memory.RedisDb
-	// SharedMem *shmobj.SharedMemory
 }
 
 var container *Container
