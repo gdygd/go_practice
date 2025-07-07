@@ -4,25 +4,31 @@ import (
 	"context"
 )
 
-func (q *MariaDbHandler) ReadTest(ctx context.Context) (int, error) {
-	query := `select 1 from dual;`
-	rows, err := q.db.QueryContext(ctx, query)
-	if err != nil {
-		return 0, err
-	}
+func (q *MariaDbHandler) ReadSysdate(ctx context.Context) (string, error) {
+	db := q.GetDB()
 
+	query := `
+	select now() as dt from dual
+	`
+
+	rows, err := db.QueryContext(ctx, query)
+	if err != nil {
+		return "", err
+	}
 	defer rows.Close()
-	var value int = 0
+	strDateTime := ""
 	if rows.Next() {
-		if err := rows.Scan(&value); err != nil {
-			return 0, err
+		if err := rows.Scan(
+			&strDateTime,
+		); err != nil {
+			return "", err
 		}
 	}
 	if err := rows.Close(); err != nil {
-		return 0, err
+		return "", err
 	}
 	if err := rows.Err(); err != nil {
-		return 0, err
+		return "", err
 	}
-	return value, nil
+	return strDateTime, nil
 }

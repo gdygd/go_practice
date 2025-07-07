@@ -6,7 +6,7 @@ import (
 )
 
 type DbHandler interface {
-	Open() (*sql.DB, error)
+	Init() error
 	Close(*sql.DB)
-	ReadTest(ctx context.Context) (int, error)
+	ReadSysdate(ctx context.Context) (string, error)
 }
