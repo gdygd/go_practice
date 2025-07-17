@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	_ "github.com/godror/godror"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func NewMdbHandler(user, pw, dbname, host string, port int) *MariaDbHandler {
