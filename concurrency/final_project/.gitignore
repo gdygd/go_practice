@@ -1,0 +1,3 @@
+./db-data
+./db-data/postgres
+./db-data/redis
