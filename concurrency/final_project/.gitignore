@@ -1,3 +1,4 @@
-./db-data
-./db-data/postgres
-./db-data/redis
+db-data
+db-data/postgres
+db-data/redis
+myapp

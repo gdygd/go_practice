@@ -3,6 +3,10 @@ module final_project
 go 1.24.1
 
 require (
+	github.com/alexedwards/scs/redisstore v0.0.0-20250417082927-ab20b3feb5e9 // indirect
+	github.com/alexedwards/scs/v2 v2.9.0 // indirect
+	github.com/go-chi/chi/v5 v5.2.3 // indirect
+	github.com/gomodule/redigo v1.9.2 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.14.3 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
