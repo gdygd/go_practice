@@ -2,11 +2,15 @@ package main
 
 import (
 	"database/sql"
+	"encoding/gob"
+	"final-project/data"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"sync"
+	"syscall"
 	"time"
 
 	"github.com/alexedwards/scs/redisstore"
@@ -42,13 +46,16 @@ func main() {
 		InfoLog:  infoLog,
 		ErrorLog: errorLog,
 		Wait:     &wg,
+		Models:   data.New(db),
 	}
 
 	// set up mail
 
+	// listen for signals
+	go app.listenForShutdown()
+
 	// listen for web connections
 	app.serve()
-
 }
 
 func (app *Config) serve() {
@@ -120,13 +127,17 @@ func openDB(dsn string) (*sql.DB, error) {
 
 // initSession sets up a session, using Redis for session store
 func initSession() *scs.SessionManager {
+	gob.Register(data.User{})
+
 	// set up session
 	session := scs.New()
 	session.Store = redisstore.New(initRedis())
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
-	session.Cookie.Secure = true
+	// session.Cookie.SameSite = http.SameSiteNoneMode
+	// session.Cookie.Secure = true
+	session.Cookie.Secure = false
 
 	return session
 }
@@ -137,9 +148,37 @@ func initRedis() *redis.Pool {
 	redisPool := &redis.Pool{
 		MaxIdle: 10,
 		Dial: func() (redis.Conn, error) {
-			return redis.Dial("tcp", os.Getenv("REDIS"))
+			// return redis.Dial("tcp", os.Getenv("REDIS"))
+			return redis.Dial("tcp", "127.0.0.1:6379")
+
 		},
 	}
 
+	// ping
+	_, err := redisPool.Get().Do("PING")
+
+	if err != nil {
+		log.Fatalf("Redis 연결 실패: %v", err)
+	} else {
+		fmt.Println("Redis 연결 성공!")
+	}
 	return redisPool
+}
+
+func (app *Config) listenForShutdown() {
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	app.shutdown()
+	os.Exit(0)
+}
+
+func (app *Config) shutdown() {
+	// perform any cleanup tasks
+	app.InfoLog.Println("would run cleanup tasks...")
+
+	// block until waitgroup is empty
+	app.Wait.Wait()
+
+	app.InfoLog.Println("closing channels and shutting down application...")
 }
