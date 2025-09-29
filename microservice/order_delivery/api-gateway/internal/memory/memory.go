@@ -49,7 +49,7 @@ func (r *RedisDb) setServerUtc(utc int64) {
 func (r *RedisDb) SetUser(id string, value User) {
 
 	if r.Rdb.Set(r.ctx, id, value, 0) != nil {
-		logger.Apilog.Error("Redis SetUser error. Key(%d), v:%v", id, value)
+		logger.Log.Error("Redis SetUser error. Key(%d), v:%v", id, value)
 	} else {
 		r.setUser(id, value)
 	}
@@ -62,7 +62,7 @@ func (r *RedisDb) GetUser(id string) User {
 func (r *RedisDb) SetServerUtc() {
 	curtm := time.Now().Unix()
 	if err := r.Rdb.Set(r.ctx, "svrutc", curtm, 0); err != nil {
-		logger.Apilog.Error("Redis SetServerUtc error ")
+		logger.Log.Error("Redis SetServerUtc error ")
 
 	} else {
 		r.setServerUtc(curtm)
@@ -70,7 +70,7 @@ func (r *RedisDb) SetServerUtc() {
 }
 
 func (r *RedisDb) SetProcess(prc general.Process) {
-	logger.Apilog.Print(2, "Redis.. SetProcess")
+	logger.Log.Print(2, "Redis.. SetProcess")
 
 	data, err := json.Marshal(prc)
 	if err != nil {
@@ -78,6 +78,6 @@ func (r *RedisDb) SetProcess(prc general.Process) {
 	}
 
 	if err := r.Rdb.Set(r.ctx, "prc_beserver", data, 0); err != nil {
-		logger.Apilog.Error("Redis SetProcess error %v", err)
+		logger.Log.Error("Redis SetProcess error %v", err)
 	}
 }
