@@ -10,7 +10,9 @@ import (
 
 	"auth-service/internal/config"
 	"auth-service/internal/container"
+	"auth-service/internal/db"
 	"auth-service/internal/logger"
+	"auth-service/internal/memory"
 	"auth-service/internal/service"
 	apiserv "auth-service/internal/service/api"
 
@@ -29,6 +31,8 @@ type Server struct {
 	tokenMaker token.Maker
 	router     *gin.Engine
 	service    service.ServiceInterface
+	dbHnd      db.DbHandler
+	objdb      *memory.RedisDb
 }
 
 func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
@@ -45,6 +49,8 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
 		config:     ct.Config,
 		tokenMaker: tokenMaker,
 		service:    apiservice,
+		dbHnd:      ct.DbHnd,
+		objdb:      ct.ObjDb,
 	}
 
 	server.setupRouter()

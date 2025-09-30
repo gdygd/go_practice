@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gdygd/goglib/token"
@@ -16,6 +17,7 @@ func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 }
 
 func corsMiddleware(origins []string) gin.HandlerFunc {
+	fmt.Printf("cors : %v \n", origins)
 	return cors.New(cors.Config{
 		AllowOrigins: origins,
 		// AllowOrigins: []string{"http://localhost:3000", "http://localhost:3001", "http://10.1.0.119:8082", "http://10.1.1.164:8082", "http://theroad.web.com:8082"},

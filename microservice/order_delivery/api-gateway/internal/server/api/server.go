@@ -1,10 +1,11 @@
 package api
 
 import (
+	"api-gateway/internal/container"
 	"net/http"
 	"sync"
 
-	"api-gateway/token"
+	"github.com/gdygd/goglib/token"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jcmturner/gokrb5/v8/config"

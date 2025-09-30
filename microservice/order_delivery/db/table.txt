@@ -1,0 +1,8 @@
+-- 사용자
+CREATE TABLE `USERS` (
+	`USER_NM`   VARCHAR(50)  NULL, -- 사용자 이름
+	`PASSWD`    VARCHAR(256) NULL, -- 비밀번호
+	`EMAIL`     VARCHAR(40)  NULL, -- 이메일
+	`CHG_DT`    DATE         NULL, -- 변경 일자
+	`CREATE_DT` DATE         NULL  -- 생성 일자
+);
