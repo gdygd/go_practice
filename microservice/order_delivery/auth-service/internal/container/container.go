@@ -1,11 +1,15 @@
 package container
 
-import "auth-service/config"
+import (
+	"auth-service/internal/config"
+	"auth-service/internal/db"
+	"auth-service/internal/memory"
+)
 
 type Container struct {
 	Config *config.Config
-	// DbHnd  db.DbHandler
-	// ObjDb  *memory.RedisDb
+	DbHnd  db.DbHandler
+	ObjDb  *memory.RedisDb
 }
 
 var container *Container

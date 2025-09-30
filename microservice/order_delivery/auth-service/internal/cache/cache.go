@@ -1,8 +1,9 @@
-return r.client.Set(ctx, key, value, expiration).Err()package cache
+package cache
 
 import (
 	"context"
 	"time"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -18,9 +19,9 @@ func NewRedisClient(addr string) *RedisClient {
 	return &RedisClient{client: rdb}
 }
 
-func (r *RedisClient) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) error [
+func (r *RedisClient) Set(ctx context.Context, key string, value interface{}, expiration time.Duration) error {
 	return r.client.Set(ctx, key, value, expiration).Err()
-]
+}
 
 func (r *RedisClient) Get(ctx context.Context, key string) (string, error) {
 	return r.client.Get(ctx, key).Result()
