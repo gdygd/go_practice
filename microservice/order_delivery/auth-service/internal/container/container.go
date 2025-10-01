@@ -44,5 +44,6 @@ func initConfig() (config.Config, error) {
 
 func initDatabase(config config.Config) db.DbHandler {
 	mdb := mdb.NewMdbHandler(config.DBUser, config.DBPasswd, config.DBSName, config.DBAddress, config.DBPort)
+	mdb.Init()
 	return mdb
 }

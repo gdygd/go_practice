@@ -1,6 +1,8 @@
 package api
 
-import "auth-service/internal/db"
+import (
+	"auth-service/internal/db"
+)
 
 func newUserResponse(user db.USER) userResponse {
 	return userResponse{

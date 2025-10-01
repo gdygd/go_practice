@@ -72,6 +72,9 @@ func (server *Server) setupRouter() {
 	router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))
 	router.GET("/test", server.testapi)
+	router.POST("/auth/login", server.userLogin)
+	router.POST("/auth/verify", server.tokenVerify)
+	router.POST("/auth/refresh", server.renewAccessToken)
 
 	server.router = router
 }

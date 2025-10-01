@@ -13,7 +13,6 @@ type loginUserRequest struct {
 
 type userResponse struct {
 	Username          string    `json:"username"`
-	FullName          string    `json:"full_name"`
 	Email             string    `json:"email"`
 	PasswordChangedAt time.Time `json:"password_changed_at"`
 	CreatedAt         time.Time `json:"created_at"`
@@ -26,4 +25,13 @@ type loginUserResponse struct {
 	RefreshToken          string       `json:"refresh_token"`
 	RefreshTokenExpiresAt time.Time    `json:"refresh_token_expires_at"`
 	User                  userResponse `json:"user"`
+}
+
+type renewAccessTokenRequest struct {
+	RefreshToken string `json:"refresh_token" binding:"required"`
+}
+
+type renewAccessTokenResponse struct {
+	AcessToken           string    `json:"access_token"`
+	AccessTokenExpiresAt time.Time `json:"access_token_expires_at"`
 }

@@ -28,7 +28,7 @@ type MariaDbHandler struct {
 func (q *MariaDbHandler) Init() error {
 
 	// dbSrc := fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true&loc=Local", q.user, q.pw, q.host, q.dbNm)
-	dbSrc := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", q.user, q.pw, q.host, q.port, q.dbNm)
+	dbSrc := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true", q.user, q.pw, q.host, q.port, q.dbNm)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
