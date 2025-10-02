@@ -1,0 +1,15 @@
+PRINT   : [order]2025/10/02 14:17:36.689342 process mode : debug
+PRINT   : [order]2025/10/02 14:17:36.689391 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/02 14:17:36.690945 [server]initSignal...
+PRINT   : [order]2025/10/02 14:17:36.691376 init state : true
+PRINT   : [order]2025/10/02 14:17:36.691548 [server]sigHandler
+PRINT   : [order]2025/10/02 14:17:36.691749 Start API server.. #1
+PRINT   : [order]2025/10/02 14:17:36.691875 Gin server start.
+PRINT   : [order]2025/10/02 14:17:37.879891 [server] Accept Signal : 2
+PRINT   : [order]2025/10/02 14:17:37.879973 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/02 14:17:37.880000 [server]shudownApp..
+PRINT   : [order]2025/10/02 14:17:37.880031 Shutdown Rest server#1
+PRINT   : [order]2025/10/02 14:17:37.880252 Shutdown Rest server#2
+PRINT   : [order]2025/10/02 14:17:38.692551 Quit auth service .. 

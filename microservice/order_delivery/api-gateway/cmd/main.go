@@ -148,7 +148,7 @@ func main() {
 	for ok {
 		time.Sleep(time.Millisecond * 1000)
 		if terminate {
-			logger.Log.Print(2, "Quit auth service .. ")
+			logger.Log.Print(2, "Quit api-gateway service .. ")
 			break
 		}
 

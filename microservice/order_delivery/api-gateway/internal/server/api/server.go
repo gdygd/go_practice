@@ -24,9 +24,9 @@ import (
 )
 
 var serviceMap = map[string]string{
-	"/auth":       "http://localhost:9081",
-	"/orders":     "http://localhost:9082",
-	"/deliveries": "http://localhost:9083",
+	"/auth":     "http://localhost:9081",
+	"/order":    "http://localhost:9082",
+	"/delivery": "http://localhost:9083",
 }
 
 // Server serves HTTP requests for our banking service.
