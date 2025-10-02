@@ -1,6 +1,7 @@
 package api
 
 import (
+	"auth-service/internal/logger"
 	"fmt"
 	"net/http"
 
@@ -11,6 +12,7 @@ import (
 
 func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		logger.Log.Print(2, "authMiddleware...")
 
 		ctx.Next()
 	}

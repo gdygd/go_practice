@@ -21,8 +21,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var TokenSecretKey = "asdFQWER!@#$ASDFEWR#@$~!~!@#123"
-
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	wg         *sync.WaitGroup
@@ -38,7 +36,7 @@ type Server struct {
 func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
 	// init service
 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
-	tokenMaker, err := token.NewJWTMaker(TokenSecretKey)
+	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
 
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker:%w", err)
@@ -72,9 +70,9 @@ func (server *Server) setupRouter() {
 	router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))
 	router.GET("/test", server.testapi)
-	router.POST("/auth/login", server.userLogin)
-	router.POST("/auth/verify", server.tokenVerify)
-	router.POST("/auth/refresh", server.renewAccessToken)
+	router.POST("/login", server.userLogin)
+	router.POST("/verify", server.tokenVerify)
+	router.POST("/refresh", server.renewAccessToken)
 
 	server.router = router
 }

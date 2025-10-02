@@ -29,8 +29,6 @@ var serviceMap = map[string]string{
 	"/deliveries": "http://localhost:9083",
 }
 
-var TokenSecretKey = "asdFQWER!@#$ASDFEWR#@$~!~!@#123"
-
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	wg         *sync.WaitGroup
@@ -46,7 +44,7 @@ type Server struct {
 func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
 	// init service
 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
-	tokenMaker, err := token.NewJWTMaker(TokenSecretKey)
+	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
 
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker:%w", err)

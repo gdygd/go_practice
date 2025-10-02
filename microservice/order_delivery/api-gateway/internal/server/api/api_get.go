@@ -1,7 +1,7 @@
 package api
 
 import (
-	"auth-service/internal/logger"
+	"api-gateway/internal/logger"
 	"net/http"
 	"time"
 

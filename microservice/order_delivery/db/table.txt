@@ -19,7 +19,7 @@ ALTER TABLE `USERS`
 CREATE TABLE `SESSIONS` (
 	`ID`         VARCHAR(255) NOT NULL, -- ID
 	`USER_NM`    VARCHAR(50)  NULL,     -- 사용자 이름
-	`REF_TOKEN`  VARCHAR(255) NULL,     -- 리프레시 토큰
+	`REF_TOKEN`  VARCHAR(512) NULL,     -- 리프레시 토큰
 	`USER_AGENT` VARCHAR(255) NULL,     -- 사용자 에이전트
 	`CLIENT_IP`  VARCHAR(20)  NULL,     -- 접속 IP
 	`BLOCK_YN`   DECIMAL(1)   NULL,     -- 블락 여부
@@ -42,4 +42,83 @@ ALTER TABLE `SESSIONS`
 	)
 	REFERENCES `USERS` ( -- 사용자
 	    `USER_NM` -- 사용자 이름
+	);
+
+-- 주문
+CREATE TABLE `ORDER` (
+	`ORDER_ID`   DECIMAL(10) NOT NULL, -- 주문 ID
+	`USER_NM`    VARCHAR(50) NULL,     -- 사용자 이름
+	`STATE`      DECIMAL(1)  NULL,     -- 상태
+	`ORDER_DT`   DATETIME    NULL,     -- 주문 일시
+	`TOT_AMOUNT` INTEGER     NULL      -- 총 가격
+);
+
+-- 주문
+ALTER TABLE `ORDER`
+	ADD CONSTRAINT `PK_ORDER` -- 주문 기본키
+	PRIMARY KEY (
+	    `ORDER_ID` -- 주문 ID
+	);
+
+-- 주문 상품
+CREATE TABLE `ORDER_ITEM` (
+	`ORDER_ID` DECIMAL(10) NOT NULL, -- 주문 ID
+	`ITEM_ID`  DECIMAL(10) NULL,     -- 물품 ID
+	`QUANTITY` DECIMAL(3)  NULL,     -- 수량
+	`PRICE`    INTEGER     NULL      -- 가격
+);
+
+-- 주문 상품
+ALTER TABLE `ORDER_ITEM`
+	ADD CONSTRAINT `PK_ORDER_ITEM` -- 주문 상품 기본키
+	PRIMARY KEY (
+	    `ORDER_ID` -- 주문 ID
+	);
+
+-- 배송
+CREATE TABLE `DELIVERY` (
+	`DELIVERY_ID` DECIMAL(10)  NOT NULL, -- 배송 ID
+	`ORDER_ID`    DECIMAL(10)  NOT NULL, -- 주문 ID
+	`STATUS`      DECIMAL(1)   NULL,     -- 상태
+	`ADDRESS`     VARCHAR(200) NULL,     -- 주소
+	`REQ_DT`      DATETIME     NULL,     -- 요청 일시
+	`COMPL_DT`    DATETIME     NULL      -- 완료 일시
+);
+
+-- 배송
+ALTER TABLE `DELIVERY`
+	ADD CONSTRAINT `PK_DELIVERY` -- 배송 기본키
+	PRIMARY KEY (
+	    `DELIVERY_ID`, -- 배송 ID
+	    `ORDER_ID`     -- 주문 ID
+	);
+
+-- 주문
+ALTER TABLE `ORDER`
+	ADD CONSTRAINT `FK_USERS_TO_ORDER` -- 사용자 -> 주문
+	FOREIGN KEY (
+	    `USER_NM` -- 사용자 이름
+	)
+	REFERENCES `USERS` ( -- 사용자
+	    `USER_NM` -- 사용자 이름
+	);
+
+-- 주문 상품
+ALTER TABLE `ORDER_ITEM`
+	ADD CONSTRAINT `FK_ORDER_TO_ORDER_ITEM` -- 주문 -> 주문 상품
+	FOREIGN KEY (
+	    `ORDER_ID` -- 주문 ID
+	)
+	REFERENCES `ORDER` ( -- 주문
+	    `ORDER_ID` -- 주문 ID
+	);
+
+-- 배송
+ALTER TABLE `DELIVERY`
+	ADD CONSTRAINT `FK_ORDER_TO_DELIVERY` -- 주문 -> 배송
+	FOREIGN KEY (
+	    `ORDER_ID` -- 주문 ID
+	)
+	REFERENCES `ORDER` ( -- 주문
+	    `ORDER_ID` -- 주문 ID
 	);

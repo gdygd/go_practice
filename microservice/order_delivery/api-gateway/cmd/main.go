@@ -1,9 +1,9 @@
 package main
 
 import (
-	"auth-service/internal/app"
-	"auth-service/internal/container"
-	"auth-service/internal/logger"
+	"api-gateway/internal/app"
+	"api-gateway/internal/container"
+	"api-gateway/internal/logger"
 	"flag"
 	"fmt"
 	"os"

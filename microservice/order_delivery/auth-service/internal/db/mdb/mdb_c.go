@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (q *MariaDbHandler) CreateSession(ctx context.Context, ss db.SESSIONS) (SESSIONS, error) {
+func (q *MariaDbHandler) CreateSession(ctx context.Context, ss db.SESSIONS) (db.SESSIONS, error) {
 	ado := q.GetDB()
 
 	var se db.SESSIONS
