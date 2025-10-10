@@ -39,10 +39,10 @@ func (q *MariaDbHandler) ReadOrderInfo(ctx context.Context, username string) ([]
 	ado := q.GetDB()
 
 	query := `
-	SELECT a.ORDER_ID, a.USER_NM, a.STATE, a.ORDER_DT, a.TOT_AMOUT 
+	SELECT a.ORDER_ID, a.USER_NM, a.STATE, a.ORDER_DT, a.TOT_AMOUNT 
 	FROM orders a
 	WHERE a.USER_NM = ?
-	ORDER a.ORDER_DB DESC
+	ORDER BY a.ORDER_DT DESC
 	`
 
 	rows, err := ado.QueryContext(ctx, query, username)
@@ -55,7 +55,7 @@ func (q *MariaDbHandler) ReadOrderInfo(ctx context.Context, username string) ([]
 	for rows.Next() {
 		ord := db.ORDER{}
 
-		err := rows.Scan(&ord.ORDER_ID, &ord.USER_NM, &ord.STATE, &ord.ORDER_DT, &ord.TOT_AMOUT)
+		err := rows.Scan(&ord.ORDER_ID, &ord.USER_NM, &ord.STATE, &ord.ORDER_DT, &ord.TOT_AMOUNT)
 		if err != nil {
 			logger.Log.Error("ReadOrderInfo Scan fail..(%v)", err)
 			return nil, err

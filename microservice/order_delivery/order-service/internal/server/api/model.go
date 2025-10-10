@@ -14,8 +14,12 @@ type userResponse struct {
 	CreatedAt         time.Time `json:"created_at"`
 }
 
+// type orderInfoRequest struct {
+// 	Username string `uri:"username" binding:"required"`
+// }
+
 type orderInfoRequest struct {
-	Username string `uri:"username" binding:"required"`
+	Username string `form:"username" binding:"required"`
 }
 
 type orderRequest struct {

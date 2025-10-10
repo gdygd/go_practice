@@ -1,0 +1,144 @@
+PRINT   : [order]2025/10/10 10:37:13.251249 process mode : debug
+PRINT   : [order]2025/10/10 10:37:13.251297 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 10:37:13.252925 [server]initSignal...
+PRINT   : [order]2025/10/10 10:37:13.253511 init state : true
+PRINT   : [order]2025/10/10 10:37:13.253730 [server]sigHandler
+PRINT   : [order]2025/10/10 10:43:02.295631 process mode : debug
+PRINT   : [order]2025/10/10 10:43:02.295690 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 10:43:02.297787 [server]initSignal...
+PRINT   : [order]2025/10/10 10:43:02.298485 init state : true
+PRINT   : [order]2025/10/10 10:43:02.298592 [server]sigHandler
+PRINT   : [order]2025/10/10 10:43:02.300073 Start API server.. #1
+PRINT   : [order]2025/10/10 10:43:02.300273 Gin server start.
+PRINT   : [order]2025/10/10 10:43:05.282764 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 10:43:05.282935 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 10:43:05.282978 [server]shudownApp..
+PRINT   : [order]2025/10/10 10:43:05.283045 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 10:43:05.283591 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 10:43:05.300519 Quit order service .. 
+PRINT   : [order]2025/10/10 10:43:21.176834 process mode : debug
+PRINT   : [order]2025/10/10 10:43:21.176887 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 10:43:21.178604 [server]initSignal...
+PRINT   : [order]2025/10/10 10:43:21.179173 init state : true
+PRINT   : [order]2025/10/10 10:43:21.179459 [server]sigHandler
+PRINT   : [order]2025/10/10 10:43:21.181544 Start API server.. #1
+PRINT   : [order]2025/10/10 10:43:21.181750 Gin server start.
+PRINT   : [order]2025/10/10 10:45:26.592956 authMiddleware...
+PRINT   : [order]2025/10/10 10:46:15.152299 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 10:46:15.152393 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 10:46:15.152427 [server]shudownApp..
+PRINT   : [order]2025/10/10 10:46:15.152463 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 10:46:15.152827 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 10:46:15.215266 Quit order service .. 
+PRINT   : [order]2025/10/10 10:46:23.208883 process mode : debug
+PRINT   : [order]2025/10/10 10:46:23.209063 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 10:46:23.211854 [server]initSignal...
+PRINT   : [order]2025/10/10 10:46:23.212725 init state : true
+PRINT   : [order]2025/10/10 10:46:23.212869 [server]sigHandler
+PRINT   : [order]2025/10/10 10:46:23.213238 Start API server.. #1
+PRINT   : [order]2025/10/10 10:46:23.213300 Gin server start.
+PRINT   : [order]2025/10/10 10:46:25.705108 authMiddleware...
+PRINT   : [order]2025/10/10 10:47:51.360958 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 10:47:51.361079 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 10:47:51.361111 [server]shudownApp..
+PRINT   : [order]2025/10/10 10:47:51.361204 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 10:47:51.361597 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 10:47:52.230019 Quit order service .. 
+PRINT   : [order]2025/10/10 10:47:59.405529 process mode : debug
+PRINT   : [order]2025/10/10 10:47:59.405583 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 10:47:59.407049 [server]initSignal...
+PRINT   : [order]2025/10/10 10:47:59.407664 init state : true
+PRINT   : [order]2025/10/10 10:47:59.407827 [server]sigHandler
+PRINT   : [order]2025/10/10 10:47:59.408451 Start API server.. #1
+PRINT   : [order]2025/10/10 10:47:59.408544 Gin server start.
+PRINT   : [order]2025/10/10 10:48:03.493000 authMiddleware...
+PRINT   : [order]2025/10/10 11:22:07.513218 authMiddleware...
+PRINT   : [order]2025/10/10 11:22:47.699432 authMiddleware...
+PRINT   : [order]2025/10/10 11:23:06.995549 authMiddleware...
+PRINT   : [order]2025/10/10 11:23:08.781529 authMiddleware...
+PRINT   : [order]2025/10/10 11:23:48.718619 authMiddleware...
+PRINT   : [order]2025/10/10 11:28:45.463886 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 11:28:45.464023 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 11:28:45.464053 [server]shudownApp..
+PRINT   : [order]2025/10/10 11:28:45.464116 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 11:28:45.464663 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 11:28:45.863012 Quit order service .. 
+PRINT   : [order]2025/10/10 11:28:54.409368 process mode : debug
+PRINT   : [order]2025/10/10 11:28:54.409413 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 11:28:54.411489 [server]initSignal...
+PRINT   : [order]2025/10/10 11:28:54.412168 init state : true
+PRINT   : [order]2025/10/10 11:28:54.412709 [server]sigHandler
+PRINT   : [order]2025/10/10 11:28:54.412752 Start API server.. #1
+PRINT   : [order]2025/10/10 11:28:54.413012 Gin server start.
+PRINT   : [order]2025/10/10 11:29:06.130905 authMiddleware...
+PRINT   : [order]2025/10/10 11:29:51.710865 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 11:29:51.710959 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 11:29:51.711031 [server]shudownApp..
+PRINT   : [order]2025/10/10 11:29:51.711055 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 11:29:51.711318 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 11:29:52.424513 Quit order service .. 
+PRINT   : [order]2025/10/10 11:30:10.832252 process mode : debug
+PRINT   : [order]2025/10/10 11:30:10.832300 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 11:30:10.833724 [server]initSignal...
+PRINT   : [order]2025/10/10 11:30:10.834322 init state : true
+PRINT   : [order]2025/10/10 11:30:10.834524 [server]sigHandler
+PRINT   : [order]2025/10/10 11:30:10.837341 Start API server.. #1
+PRINT   : [order]2025/10/10 11:30:10.837598 Gin server start.
+PRINT   : [order]2025/10/10 11:30:14.012818 authMiddleware...
+PRINT   : [order]2025/10/10 11:31:28.146565 authMiddleware...
+PRINT   : [order]2025/10/10 11:32:07.864305 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 11:32:07.864390 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 11:32:07.864424 [server]shudownApp..
+PRINT   : [order]2025/10/10 11:32:07.864454 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 11:32:07.865062 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 11:32:08.860281 Quit order service .. 
+PRINT   : [order]2025/10/10 11:32:15.414148 process mode : debug
+PRINT   : [order]2025/10/10 11:32:15.414193 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 11:32:15.415269 [server]initSignal...
+PRINT   : [order]2025/10/10 11:32:15.416045 [server]sigHandler
+PRINT   : [order]2025/10/10 11:32:15.416081 init state : true
+PRINT   : [order]2025/10/10 11:32:15.416798 Start API server.. #1
+PRINT   : [order]2025/10/10 11:32:15.416883 Gin server start.
+PRINT   : [order]2025/10/10 11:32:17.274990 authMiddleware...
+PRINT   : [order]2025/10/10 11:32:21.565858 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 11:32:21.566083 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 11:32:21.566237 [server]shudownApp..
+PRINT   : [order]2025/10/10 11:32:21.566274 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 11:32:21.566711 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 11:32:22.418588 Quit order service .. 
+PRINT   : [order]2025/10/10 11:33:23.583117 process mode : debug
+PRINT   : [order]2025/10/10 11:33:23.583162 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/10 11:33:23.585257 [server]initSignal...
+PRINT   : [order]2025/10/10 11:33:23.585855 init state : true
+PRINT   : [order]2025/10/10 11:33:23.586150 Start API server.. #1
+PRINT   : [order]2025/10/10 11:33:23.586207 Gin server start.
+PRINT   : [order]2025/10/10 11:33:23.586301 [server]sigHandler
+PRINT   : [order]2025/10/10 11:33:26.538178 authMiddleware...
+PRINT   : [order]2025/10/10 11:33:37.168520 authMiddleware...
+PRINT   : [order]2025/10/10 11:34:27.713580 authMiddleware...
+PRINT   : [order]2025/10/10 11:36:00.030974 authMiddleware...
+PRINT   : [order]2025/10/10 11:36:05.440816 authMiddleware...
+PRINT   : [order]2025/10/10 11:40:07.829212 authMiddleware...
+PRINT   : [order]2025/10/10 11:40:09.613686 authMiddleware...
+PRINT   : [order]2025/10/10 11:41:16.326613 authMiddleware...
+PRINT   : [order]2025/10/10 11:42:11.091792 authMiddleware...
+PRINT   : [order]2025/10/10 11:43:34.252815 authMiddleware...
+ERROR  : [order]2025/10/10 11:43:34.257342 RequestOrder error. Error 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`orders`, CONSTRAINT `FK_USERS_TO_ORDERS` FOREIGN KEY (`USER_NM`) REFERENCES `users` (`USER_NM`))
+PRINT   : [order]2025/10/10 11:44:03.767360 authMiddleware...
+PRINT   : [order]2025/10/10 11:44:24.072314 authMiddleware...

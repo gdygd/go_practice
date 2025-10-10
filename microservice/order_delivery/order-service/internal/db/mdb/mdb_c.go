@@ -13,10 +13,10 @@ func (q *MariaDbHandler) RequestOrder(ctx context.Context, ord db.ORDER) (db.ORD
 
 	query := `
 	INSERT INTO orders (USER_NM, STATE, ORDER_DT, TOT_AMOUNT)
-	VALUES(?, ?, ?, ?) RETURNING ORDER_ID, USER_NM, STATE, ORDER_DT, TOT_AMOUNT
+	VALUES(?, ?, now(), ?) RETURNING ORDER_ID, USER_NM, STATE, ORDER_DT, TOT_AMOUNT
 	`
 
-	row := ado.QueryRow(query, ord.USER_NM, db.PENDING, ord.ORDER_DT, ord.TOT_AMOUNT)
+	row := ado.QueryRow(query, ord.USER_NM, db.PENDING, ord.TOT_AMOUNT)
 
 	err := row.Scan(&order.ORDER_ID, &order.USER_NM, &order.STATE, &order.ORDER_DT, &order.TOT_AMOUNT)
 	if err != nil {

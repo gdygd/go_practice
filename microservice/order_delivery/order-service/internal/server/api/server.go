@@ -69,12 +69,11 @@ func (server *Server) setupRouter() {
 
 	router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))
-	router.GET("/test", server.testapi)
 
 	router.GET("/test", server.testapi)
 	router.GET("/info", server.getOrderInfo)
-	router.GET("/request", server.requestOrder)
-	router.GET("/cancel", server.cancelOrder)
+	router.POST("/request", server.requestOrder)
+	router.POST("/cancel", server.cancelOrder)
 
 	server.router = router
 }

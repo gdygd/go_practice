@@ -42,3 +42,10 @@ PRINT   : [apigw]2025/10/02 11:00:34.447322 init state : true
 PRINT   : [apigw]2025/10/02 11:00:34.447994 [server]sigHandler
 PRINT   : [apigw]2025/10/02 11:00:34.448170 Start API server.. #1
 PRINT   : [apigw]2025/10/02 11:00:34.448237 Gin server start.
+PRINT   : [apigw]2025/10/02 16:59:40.623600 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/02 16:59:40.623700 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/02 16:59:40.623740 [server]shudownApp..
+PRINT   : [apigw]2025/10/02 16:59:40.623771 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/02 16:59:40.624134 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/02 16:59:40.974440 Quit auth service .. 

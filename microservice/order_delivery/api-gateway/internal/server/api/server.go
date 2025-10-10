@@ -90,9 +90,11 @@ func (server *Server) setupRouter() {
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 
-	router.Any("/orders/*proxyPath", func(c *gin.Context) {
-		proxy := newReverseProxy(serviceMap["/orders"])
-		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/orders")
+	router.Any("/order/*proxyPath", func(c *gin.Context) {
+		proxy := newReverseProxy(serviceMap["/order"])
+		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/order")
+		// logger.Log.Print(2, "orders path : %s", c.Request.URL.Path)
+		fmt.Printf("orders path : %s", c.Request.URL.Path)
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 
