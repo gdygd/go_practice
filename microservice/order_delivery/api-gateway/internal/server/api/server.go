@@ -98,9 +98,9 @@ func (server *Server) setupRouter() {
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 
-	router.Any("/deliveries/*proxyPath", func(c *gin.Context) {
-		proxy := newReverseProxy(serviceMap["/deliveries"])
-		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/deliveries")
+	router.Any("/delivery/*proxyPath", func(c *gin.Context) {
+		proxy := newReverseProxy(serviceMap["/delivery"])
+		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/delivery")
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 

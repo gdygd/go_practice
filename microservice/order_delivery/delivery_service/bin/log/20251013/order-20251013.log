@@ -1,0 +1,210 @@
+PRINT   : [order]2025/10/13 13:49:27.909663 process mode : debug
+PRINT   : [order]2025/10/13 13:49:27.909698 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 13:49:27.911901 [server]initSignal...
+PRINT   : [order]2025/10/13 13:49:27.912556 init state : true
+PRINT   : [order]2025/10/13 13:49:27.912608 [server]sigHandler
+PRINT   : [order]2025/10/13 13:49:27.913451 Start API server.. #1
+PRINT   : [order]2025/10/13 13:49:27.913586 Gin server start.
+PRINT   : [order]2025/10/13 13:53:32.011945 authMiddleware...
+PRINT   : [order]2025/10/13 13:55:47.213236 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 13:55:47.213333 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 13:55:47.213366 [server]shudownApp..
+PRINT   : [order]2025/10/13 13:55:47.213395 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 13:55:47.213624 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 13:55:47.978122 Quit order service .. 
+PRINT   : [order]2025/10/13 14:02:16.254422 process mode : debug
+PRINT   : [order]2025/10/13 14:02:16.254467 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:02:16.256764 [server]initSignal...
+PRINT   : [order]2025/10/13 14:02:16.257204 init state : true
+PRINT   : [order]2025/10/13 14:02:16.257498 Start API server.. #1
+PRINT   : [order]2025/10/13 14:02:16.257523 Gin server start.
+PRINT   : [order]2025/10/13 14:02:16.257737 [server]sigHandler
+PRINT   : [order]2025/10/13 14:02:34.861990 authMiddleware...
+ERROR  : [order]2025/10/13 14:02:34.864053 RequestOrder error. Error 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`deliveries`, CONSTRAINT `FK_ORDERS_TO_DELIVERIES` FOREIGN KEY (`ORDER_ID`) REFERENCES `orders` (`ORDER_ID`))
+PRINT   : [order]2025/10/13 14:03:54.747428 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:03:54.747507 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:03:54.747539 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:03:54.747568 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:03:54.747901 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:03:55.275065 Quit order service .. 
+PRINT   : [order]2025/10/13 14:04:09.334021 process mode : debug
+PRINT   : [order]2025/10/13 14:04:09.334067 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:04:09.335828 [server]initSignal...
+PRINT   : [order]2025/10/13 14:04:09.336310 init state : true
+PRINT   : [order]2025/10/13 14:04:09.336996 Start API server.. #1
+PRINT   : [order]2025/10/13 14:04:09.337063 Gin server start.
+PRINT   : [order]2025/10/13 14:04:09.337243 [server]sigHandler
+PRINT   : [order]2025/10/13 14:04:11.874887 authMiddleware...
+ERROR  : [order]2025/10/13 14:04:11.877040 RequestOrder error. sql: Scan error on column index 5, name "COMPL_DT": unsupported Scan, storing driver.Value type <nil> into type *time.Time
+PRINT   : [order]2025/10/13 14:05:04.983288 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:05:04.983407 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:05:04.983473 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:05:04.983534 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:05:04.984239 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:05:05.345815 Quit order service .. 
+PRINT   : [order]2025/10/13 14:05:12.647668 process mode : debug
+PRINT   : [order]2025/10/13 14:05:12.647708 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:05:12.649376 [server]initSignal...
+PRINT   : [order]2025/10/13 14:05:12.650308 init state : true
+PRINT   : [order]2025/10/13 14:05:12.650417 [server]sigHandler
+PRINT   : [order]2025/10/13 14:05:12.650934 Start API server.. #1
+PRINT   : [order]2025/10/13 14:05:12.650980 Gin server start.
+PRINT   : [order]2025/10/13 14:05:15.463537 authMiddleware...
+PRINT   : [order]2025/10/13 14:52:09.679053 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:52:09.679261 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:52:09.679300 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:52:09.679348 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:52:09.680275 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:52:10.108812 Quit order service .. 
+PRINT   : [order]2025/10/13 14:52:34.891671 process mode : debug
+PRINT   : [order]2025/10/13 14:52:34.891711 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:52:34.893588 [server]initSignal...
+PRINT   : [order]2025/10/13 14:52:34.894001 init state : true
+PRINT   : [order]2025/10/13 14:52:34.894569 [server]sigHandler
+PRINT   : [order]2025/10/13 14:52:34.895109 Start API server.. #1
+PRINT   : [order]2025/10/13 14:52:34.895288 Gin server start.
+PRINT   : [order]2025/10/13 14:53:46.692830 authMiddleware...
+PRINT   : [order]2025/10/13 14:55:24.084886 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:55:24.084977 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:55:24.085014 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:55:24.085047 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:55:24.085258 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:55:24.923956 Quit order service .. 
+PRINT   : [order]2025/10/13 14:55:31.753781 process mode : debug
+PRINT   : [order]2025/10/13 14:55:31.753834 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:55:31.755225 [server]initSignal...
+PRINT   : [order]2025/10/13 14:55:31.755936 init state : true
+PRINT   : [order]2025/10/13 14:55:31.756326 [server]sigHandler
+PRINT   : [order]2025/10/13 14:55:31.756683 Start API server.. #1
+PRINT   : [order]2025/10/13 14:55:31.756834 Gin server start.
+PRINT   : [order]2025/10/13 14:55:34.245200 authMiddleware...
+ERROR  : [order]2025/10/13 14:55:34.258164 ReadOrderInfo Scan fail..(sql: Scan error on column index 5, name "COMPL_DT": unsupported Scan, storing driver.Value type <nil> into type *time.Time)
+PRINT   : [order]2025/10/13 14:55:55.427163 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:55:55.427264 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:55:55.427349 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:55:55.427415 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:55:55.427886 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:55:55.761565 Quit order service .. 
+PRINT   : [order]2025/10/13 14:56:03.706871 process mode : debug
+PRINT   : [order]2025/10/13 14:56:03.706960 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:56:03.709132 [server]initSignal...
+PRINT   : [order]2025/10/13 14:56:03.709389 init state : true
+PRINT   : [order]2025/10/13 14:56:03.709817 [server]sigHandler
+PRINT   : [order]2025/10/13 14:56:03.709946 Start API server.. #1
+PRINT   : [order]2025/10/13 14:56:03.710016 Gin server start.
+PRINT   : [order]2025/10/13 14:56:05.613040 authMiddleware...
+ERROR  : [order]2025/10/13 14:56:05.616327 ReadOrderInfo Scan fail..(sql: Scan error on column index 5, name "COMPL_DT": unsupported Scan, storing driver.Value type []uint8 into type *time.Time)
+PRINT   : [order]2025/10/13 14:58:36.861484 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:58:36.861650 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:58:36.861705 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:58:36.861737 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:58:36.861970 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:58:37.740704 Quit order service .. 
+PRINT   : [order]2025/10/13 14:59:13.295319 process mode : debug
+PRINT   : [order]2025/10/13 14:59:13.295376 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:59:13.296557 [server]initSignal...
+PRINT   : [order]2025/10/13 14:59:13.296943 init state : true
+PRINT   : [order]2025/10/13 14:59:13.297454 Start API server.. #1
+PRINT   : [order]2025/10/13 14:59:13.297723 Gin server start.
+PRINT   : [order]2025/10/13 14:59:13.297737 [server]sigHandler
+PRINT   : [order]2025/10/13 14:59:15.092753 authMiddleware...
+ERROR  : [order]2025/10/13 14:59:15.094258 ReadOrderInfo Scan fail..(sql: Scan error on column index 5, name "COMPL_DT": unsupported Scan, storing driver.Value type []uint8 into type *time.Time)
+PRINT   : [order]2025/10/13 14:59:39.865305 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 14:59:39.865514 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 14:59:39.865577 [server]shudownApp..
+PRINT   : [order]2025/10/13 14:59:39.865602 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 14:59:39.865883 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 14:59:40.302383 Quit order service .. 
+PRINT   : [order]2025/10/13 14:59:47.237552 process mode : debug
+PRINT   : [order]2025/10/13 14:59:47.237605 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 14:59:47.239445 [server]initSignal...
+PRINT   : [order]2025/10/13 14:59:47.240325 init state : true
+PRINT   : [order]2025/10/13 14:59:47.240446 [server]sigHandler
+PRINT   : [order]2025/10/13 14:59:47.240863 Start API server.. #1
+PRINT   : [order]2025/10/13 14:59:47.240910 Gin server start.
+PRINT   : [order]2025/10/13 14:59:48.865697 authMiddleware...
+PRINT   : [order]2025/10/13 15:21:08.481724 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 15:21:08.481900 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 15:21:08.482014 [server]shudownApp..
+PRINT   : [order]2025/10/13 15:21:08.482072 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 15:21:08.482472 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 15:21:09.463757 Quit order service .. 
+PRINT   : [order]2025/10/13 15:21:20.490590 process mode : debug
+PRINT   : [order]2025/10/13 15:21:20.490644 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 15:21:20.492888 [server]initSignal...
+PRINT   : [order]2025/10/13 15:21:20.493287 init state : true
+PRINT   : [order]2025/10/13 15:21:20.493803 [server]sigHandler
+PRINT   : [order]2025/10/13 15:21:20.496541 Start API server.. #1
+PRINT   : [order]2025/10/13 15:21:20.496790 Gin server start.
+PRINT   : [order]2025/10/13 15:22:58.013510 authMiddleware...
+ERROR  : [order]2025/10/13 15:22:58.015291 CancelOrder error. Error 1054 (42S22): Unknown column 'STATE' in 'SET'
+PRINT   : [order]2025/10/13 15:23:21.978916 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 15:23:21.978997 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 15:23:21.979051 [server]shudownApp..
+PRINT   : [order]2025/10/13 15:23:21.979103 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 15:23:21.979426 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 15:23:22.517148 Quit order service .. 
+PRINT   : [order]2025/10/13 15:23:23.247311 process mode : debug
+PRINT   : [order]2025/10/13 15:23:23.247375 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 15:23:23.249592 [server]initSignal...
+PRINT   : [order]2025/10/13 15:23:23.250226 init state : true
+PRINT   : [order]2025/10/13 15:23:23.250606 [server]sigHandler
+PRINT   : [order]2025/10/13 15:23:23.250987 Start API server.. #1
+PRINT   : [order]2025/10/13 15:23:23.251061 Gin server start.
+PRINT   : [order]2025/10/13 15:23:24.358899 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 15:23:24.358985 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 15:23:24.359018 [server]shudownApp..
+PRINT   : [order]2025/10/13 15:23:24.359104 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 15:23:24.359358 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 15:23:24.878843 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 15:23:24.878941 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 15:23:25.251274 Quit order service .. 
+PRINT   : [order]2025/10/13 15:23:34.235453 process mode : debug
+PRINT   : [order]2025/10/13 15:23:34.235515 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 15:23:34.237050 [server]initSignal...
+PRINT   : [order]2025/10/13 15:23:34.237661 init state : true
+PRINT   : [order]2025/10/13 15:23:34.239272 Start API server.. #1
+PRINT   : [order]2025/10/13 15:23:34.239270 [server]sigHandler
+PRINT   : [order]2025/10/13 15:23:34.239616 Gin server start.
+PRINT   : [order]2025/10/13 15:23:38.746474 authMiddleware...
+PRINT   : [order]2025/10/13 15:25:52.602125 authMiddleware...
+PRINT   : [order]2025/10/13 15:26:43.403559 authMiddleware...
+PRINT   : [order]2025/10/13 15:27:05.053052 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 15:27:05.053138 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 15:27:05.053176 [server]shudownApp..
+PRINT   : [order]2025/10/13 15:27:05.053255 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 15:27:05.053572 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 15:27:05.283143 Quit order service .. 
+PRINT   : [order]2025/10/13 15:27:07.304639 process mode : debug
+PRINT   : [order]2025/10/13 15:27:07.304690 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/13 15:27:07.305755 [server]initSignal...
+PRINT   : [order]2025/10/13 15:27:07.306348 init state : true
+PRINT   : [order]2025/10/13 15:27:07.306898 [server]sigHandler
+PRINT   : [order]2025/10/13 15:27:07.307229 Start API server.. #1
+PRINT   : [order]2025/10/13 15:27:07.307305 Gin server start.

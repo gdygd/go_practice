@@ -6,3 +6,18 @@ PRINT   : [apigw]2025/10/13 10:22:48.403482 init state : true
 PRINT   : [apigw]2025/10/13 10:22:48.404233 [server]sigHandler
 PRINT   : [apigw]2025/10/13 10:22:48.404276 Start API server.. #1
 PRINT   : [apigw]2025/10/13 10:22:48.404425 Gin server start.
+PRINT   : [apigw]2025/10/13 13:53:14.507259 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/13 13:53:14.507359 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/13 13:53:14.507399 [server]shudownApp..
+PRINT   : [apigw]2025/10/13 13:53:14.507433 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/13 13:53:14.507842 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/13 13:53:15.483871 Quit api-gateway service .. 
+PRINT   : [apigw]2025/10/13 13:53:22.077329 process mode : debug
+PRINT   : [apigw]2025/10/13 13:53:22.077372 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/13 13:53:22.078948 [server]initSignal...
+PRINT   : [apigw]2025/10/13 13:53:22.079913 init state : true
+PRINT   : [apigw]2025/10/13 13:53:22.080079 [server]sigHandler
+PRINT   : [apigw]2025/10/13 13:53:22.082349 Start API server.. #1
+PRINT   : [apigw]2025/10/13 13:53:22.082579 Gin server start.
