@@ -81,3 +81,10 @@ PRINT   : [apigw]2025/10/10 11:43:17.491396 init state : true
 PRINT   : [apigw]2025/10/10 11:43:17.491495 [server]sigHandler
 PRINT   : [apigw]2025/10/10 11:43:17.491818 Start API server.. #1
 PRINT   : [apigw]2025/10/10 11:43:17.491866 Gin server start.
+PRINT   : [apigw]2025/10/10 11:48:26.397877 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/10 11:48:26.398056 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/10 11:48:26.398467 [server]shudownApp..
+PRINT   : [apigw]2025/10/10 11:48:26.398550 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/10 11:48:26.398914 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/10 11:48:26.547217 Quit api-gateway service .. 

@@ -73,7 +73,8 @@ func (server *Server) setupRouter() {
 	router.GET("/test", server.testapi)
 	router.GET("/info", server.getOrderInfo)
 	router.POST("/request", server.requestOrder)
-	router.POST("/cancel", server.cancelOrder)
+	router.POST("/cancel/:id", server.cancelOrder)
+	router.POST("/confirm/:id", server.confirmOrder)
 
 	server.router = router
 }

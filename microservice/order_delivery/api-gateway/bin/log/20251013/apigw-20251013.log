@@ -1,0 +1,8 @@
+PRINT   : [apigw]2025/10/13 10:22:48.400953 process mode : debug
+PRINT   : [apigw]2025/10/13 10:22:48.400991 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/13 10:22:48.403043 [server]initSignal...
+PRINT   : [apigw]2025/10/13 10:22:48.403482 init state : true
+PRINT   : [apigw]2025/10/13 10:22:48.404233 [server]sigHandler
+PRINT   : [apigw]2025/10/13 10:22:48.404276 Start API server.. #1
+PRINT   : [apigw]2025/10/13 10:22:48.404425 Gin server start.

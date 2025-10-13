@@ -142,3 +142,10 @@ PRINT   : [order]2025/10/10 11:43:34.252815 authMiddleware...
 ERROR  : [order]2025/10/10 11:43:34.257342 RequestOrder error. Error 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`testdb`.`orders`, CONSTRAINT `FK_USERS_TO_ORDERS` FOREIGN KEY (`USER_NM`) REFERENCES `users` (`USER_NM`))
 PRINT   : [order]2025/10/10 11:44:03.767360 authMiddleware...
 PRINT   : [order]2025/10/10 11:44:24.072314 authMiddleware...
+PRINT   : [order]2025/10/10 11:48:27.442440 [server] Accept Signal : 2
+PRINT   : [order]2025/10/10 11:48:27.442532 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/10 11:48:27.442563 [server]shudownApp..
+PRINT   : [order]2025/10/10 11:48:27.442601 Shutdown Rest server#1
+PRINT   : [order]2025/10/10 11:48:27.443223 Shutdown Rest server#2
+PRINT   : [order]2025/10/10 11:48:27.751856 Quit order service .. 
