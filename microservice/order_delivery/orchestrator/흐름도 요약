@@ -1,0 +1,24 @@
+[API Gateway]
+     |
+     ↓
+[Order Service]  →  [Saga Orchestrator]
+                         ↓
+             ┌────────────┼────────────┐
+             ↓             ↓            ↓
+      [Payment Service] [Delivery Service] [Order Service 보상]
+	  
+      
+[Client]
+   |
+   v
+POST /orders  (OrderService)
+   |
+   |-- (1) 주문 생성 (DB에 PENDING)
+   |
+   |-- (2) 오케스트레이터 서비스 호출 (/saga/start)
+          |
+          |-- 배송 서비스 호출 (/delivery)
+          |-- 결제 서비스 호출 (/payment)
+          |
+          |-- 성공 시 /order/confirm 호출
+          |-- 실패 시 /order/cancel 호출
