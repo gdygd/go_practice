@@ -71,7 +71,7 @@ func (server *Server) setupRouter() {
 	router.Use(authMiddleware(server.tokenMaker))
 
 	router.GET("/test", server.testapi)
-	router.GET("/saga/order", server.testapi)
+	router.POST("/order", server.sagaOrder)
 
 	server.router = router
 }

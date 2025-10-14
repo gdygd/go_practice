@@ -25,3 +25,10 @@ PRINT   : [order]2025/10/13 10:25:32.786361 Start API server.. #1
 PRINT   : [order]2025/10/13 10:25:32.786564 Gin server start.
 PRINT   : [order]2025/10/13 10:25:59.088796 authMiddleware...
 PRINT   : [order]2025/10/13 10:26:41.720832 authMiddleware...
+PRINT   : [order]2025/10/13 18:00:13.246318 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 18:00:13.246408 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 18:00:13.246454 [server]shudownApp..
+PRINT   : [order]2025/10/13 18:00:13.246498 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 18:00:13.246811 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 18:00:14.174907 Quit order service .. 

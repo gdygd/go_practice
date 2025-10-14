@@ -1,0 +1,78 @@
+PRINT   : [saga]2025/10/14 10:12:36.776338 process mode : debug
+PRINT   : [saga]2025/10/14 10:12:36.776418 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [saga]2025/10/14 10:12:36.778541 [server]initSignal...
+PRINT   : [saga]2025/10/14 10:12:36.778938 init state : true
+PRINT   : [saga]2025/10/14 10:12:36.779542 Start API server.. #1
+PRINT   : [saga]2025/10/14 10:12:36.779612 Gin server start.
+PRINT   : [saga]2025/10/14 10:12:36.780293 [server]sigHandler
+PRINT   : [saga]2025/10/14 10:12:37.935789 [server] Accept Signal : 2
+PRINT   : [saga]2025/10/14 10:12:37.935866 [server]SIGINT(2)
+
+PRINT   : [saga]2025/10/14 10:12:37.935903 [server]shudownApp..
+PRINT   : [saga]2025/10/14 10:12:37.935933 Shutdown Rest server#1
+PRINT   : [saga]2025/10/14 10:12:37.936205 Shutdown Rest server#2
+PRINT   : [saga]2025/10/14 10:12:38.780700 Quit order service .. 
+PRINT   : [saga]2025/10/14 16:25:11.789333 process mode : debug
+PRINT   : [saga]2025/10/14 16:25:11.789429 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [saga]2025/10/14 16:25:11.791726 [server]initSignal...
+PRINT   : [saga]2025/10/14 16:25:11.792009 init state : true
+PRINT   : [saga]2025/10/14 16:25:11.792706 [server]sigHandler
+PRINT   : [saga]2025/10/14 16:25:11.792948 Start API server.. #1
+PRINT   : [saga]2025/10/14 16:25:11.793063 Gin server start.
+PRINT   : [saga]2025/10/14 17:32:19.177609 authMiddleware...
+PRINT   : [saga]2025/10/14 17:33:12.920059 [server] Accept Signal : 2
+PRINT   : [saga]2025/10/14 17:33:12.920154 [server]SIGINT(2)
+
+PRINT   : [saga]2025/10/14 17:33:12.920192 [server]shudownApp..
+PRINT   : [saga]2025/10/14 17:33:12.920243 Shutdown Rest server#1
+PRINT   : [saga]2025/10/14 17:33:12.920815 Shutdown Rest server#2
+PRINT   : [saga]2025/10/14 17:33:13.458840 Quit order service .. 
+PRINT   : [saga]2025/10/14 17:33:22.699268 process mode : debug
+PRINT   : [saga]2025/10/14 17:33:22.699306 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [saga]2025/10/14 17:33:22.701032 [server]initSignal...
+PRINT   : [saga]2025/10/14 17:33:22.701524 init state : true
+PRINT   : [saga]2025/10/14 17:33:22.701867 Start API server.. #1
+PRINT   : [saga]2025/10/14 17:33:22.701897 Gin server start.
+PRINT   : [saga]2025/10/14 17:33:22.702184 [server]sigHandler
+PRINT   : [saga]2025/10/14 17:33:24.615625 authMiddleware...
+PRINT   : [saga]2025/10/14 17:33:48.664281 authMiddleware...
+PRINT   : [saga]2025/10/14 17:34:12.222698 authMiddleware...
+PRINT   : [saga]2025/10/14 17:34:12.222901 orchestrator start, order : 4
+PRINT   : [saga]2025/10/14 17:34:12.224957 orchestrator end, order : 4
+PRINT   : [saga]2025/10/14 17:41:07.674386 authMiddleware...
+PRINT   : [saga]2025/10/14 17:41:07.674657 orchestrator start, order : 4
+PRINT   : [saga]2025/10/14 17:41:07.676560 orchestrator end, order : 4
+PRINT   : [saga]2025/10/14 17:41:44.178659 authMiddleware...
+PRINT   : [saga]2025/10/14 17:41:44.179125 orchestrator start, order : 4
+PRINT   : [saga]2025/10/14 17:41:44.180906 orchestrator end, order : 4
+PRINT   : [saga]2025/10/14 17:41:50.703817 authMiddleware...
+PRINT   : [saga]2025/10/14 17:41:50.704006 orchestrator start, order : 4
+PRINT   : [saga]2025/10/14 17:41:50.705424 orchestrator end, order : 4
+PRINT   : [saga]2025/10/14 18:02:49.801151 authMiddleware...
+PRINT   : [saga]2025/10/14 18:03:05.594704 authMiddleware...
+PRINT   : [saga]2025/10/14 18:03:12.209959 [server] Accept Signal : 2
+PRINT   : [saga]2025/10/14 18:03:12.210084 [server]SIGINT(2)
+
+PRINT   : [saga]2025/10/14 18:03:12.210129 [server]shudownApp..
+PRINT   : [saga]2025/10/14 18:03:12.210163 Shutdown Rest server#1
+PRINT   : [saga]2025/10/14 18:03:12.210542 Shutdown Rest server#2
+PRINT   : [saga]2025/10/14 18:03:13.002777 Quit order service .. 
+PRINT   : [saga]2025/10/14 18:04:05.500033 process mode : debug
+PRINT   : [saga]2025/10/14 18:04:05.500143 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [saga]2025/10/14 18:04:05.502568 [server]initSignal...
+PRINT   : [saga]2025/10/14 18:04:05.503326 init state : true
+PRINT   : [saga]2025/10/14 18:04:05.503391 [server]sigHandler
+PRINT   : [saga]2025/10/14 18:04:05.504077 Start API server.. #1
+PRINT   : [saga]2025/10/14 18:04:05.504170 Gin server start.
+PRINT   : [saga]2025/10/14 18:04:09.584492 authMiddleware...
+PRINT   : [saga]2025/10/14 18:04:17.889789 [server] Accept Signal : 2
+PRINT   : [saga]2025/10/14 18:04:17.889889 [server]SIGINT(2)
+
+PRINT   : [saga]2025/10/14 18:04:17.889975 [server]shudownApp..
+PRINT   : [saga]2025/10/14 18:04:17.890004 Shutdown Rest server#1
+PRINT   : [saga]2025/10/14 18:04:17.890477 Shutdown Rest server#2
+PRINT   : [saga]2025/10/14 18:04:18.507431 Quit order service .. 

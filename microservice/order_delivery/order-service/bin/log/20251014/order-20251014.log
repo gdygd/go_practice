@@ -1,0 +1,179 @@
+PRINT   : [order]2025/10/14 16:23:54.110614 process mode : debug
+PRINT   : [order]2025/10/14 16:23:54.110670 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 16:23:54.112402 [server]initSignal...
+PRINT   : [order]2025/10/14 16:23:54.113232 init state : true
+PRINT   : [order]2025/10/14 16:23:54.113377 [server]sigHandler
+PRINT   : [order]2025/10/14 16:23:54.113916 Start API server.. #1
+PRINT   : [order]2025/10/14 16:23:54.113980 Gin server start.
+PRINT   : [order]2025/10/14 16:26:49.684169 authMiddleware...
+PRINT   : [order]2025/10/14 17:28:35.034549 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:28:35.034679 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:28:35.034722 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:28:35.034758 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:28:35.035387 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:28:35.739890 Quit order service .. 
+PRINT   : [order]2025/10/14 17:28:45.987316 process mode : debug
+PRINT   : [order]2025/10/14 17:28:45.987381 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:28:45.989723 [server]initSignal...
+PRINT   : [order]2025/10/14 17:28:45.990559 init state : true
+PRINT   : [order]2025/10/14 17:28:45.990982 [server]sigHandler
+PRINT   : [order]2025/10/14 17:28:45.991243 Start API server.. #1
+PRINT   : [order]2025/10/14 17:28:45.991334 Gin server start.
+PRINT   : [order]2025/10/14 17:30:16.091783 authMiddleware...
+PRINT   : [order]2025/10/14 17:30:43.823139 authMiddleware...
+PRINT   : [order]2025/10/14 17:34:37.131134 authMiddleware...
+PRINT   : [order]2025/10/14 17:34:51.165196 authMiddleware...
+PRINT   : [order]2025/10/14 17:37:13.847768 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:37:13.847855 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:37:13.848081 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:37:13.848202 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:37:13.848546 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:37:14.076504 Quit order service .. 
+PRINT   : [order]2025/10/14 17:37:22.283379 process mode : debug
+PRINT   : [order]2025/10/14 17:37:22.283431 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:37:22.285223 [server]initSignal...
+PRINT   : [order]2025/10/14 17:37:22.285730 init state : true
+PRINT   : [order]2025/10/14 17:37:22.286125 Start API server.. #1
+PRINT   : [order]2025/10/14 17:37:22.286160 Gin server start.
+PRINT   : [order]2025/10/14 17:37:22.286165 [server]sigHandler
+PRINT   : [order]2025/10/14 17:38:01.452979 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:38:01.453062 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:38:01.453096 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:38:01.453119 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:38:01.453379 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:38:02.292228 Quit order service .. 
+PRINT   : [order]2025/10/14 17:38:10.874511 process mode : debug
+PRINT   : [order]2025/10/14 17:38:10.874579 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:38:10.876258 [server]initSignal...
+PRINT   : [order]2025/10/14 17:38:10.877013 init state : true
+PRINT   : [order]2025/10/14 17:38:10.877221 [server]sigHandler
+PRINT   : [order]2025/10/14 17:38:10.878365 Start API server.. #1
+PRINT   : [order]2025/10/14 17:38:10.878548 Gin server start.
+PRINT   : [order]2025/10/14 17:38:15.135209 authMiddleware...
+PRINT   : [order]2025/10/14 17:38:15.137807 Request saga order ... 
+PRINT   : [order]2025/10/14 17:38:15.138140 request url : http://10.1.0.119:9080/saga/order
+ERROR  : [order]2025/10/14 17:38:15.140058 Http Request 호출 실패#2: [404]: 404 page not found
+PRINT   : [order]2025/10/14 17:38:15.140180 Request saga order fail... 
+PRINT   : [order]2025/10/14 17:40:03.700888 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:40:03.701154 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:40:03.701440 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:40:03.701669 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:40:03.702072 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:40:03.898560 Quit order service .. 
+PRINT   : [order]2025/10/14 17:40:12.106182 process mode : debug
+PRINT   : [order]2025/10/14 17:40:12.106217 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:40:12.107992 [server]initSignal...
+PRINT   : [order]2025/10/14 17:40:12.108741 init state : true
+PRINT   : [order]2025/10/14 17:40:12.109182 Start API server.. #1
+PRINT   : [order]2025/10/14 17:40:12.109204 [server]sigHandler
+PRINT   : [order]2025/10/14 17:40:12.109232 Gin server start.
+PRINT   : [order]2025/10/14 17:40:15.011747 authMiddleware...
+PRINT   : [order]2025/10/14 17:40:15.013841 Request saga order ... 
+PRINT   : [order]2025/10/14 17:40:15.014000 request url : http://10.1.0.119:9080/saga/order
+ERROR  : [order]2025/10/14 17:40:15.016020 Http Request 호출 실패#2: [404]: 404 page not found
+PRINT   : [order]2025/10/14 17:40:15.016309 Request saga order fail... 
+PRINT   : [order]2025/10/14 17:41:22.004024 authMiddleware...
+PRINT   : [order]2025/10/14 17:41:22.006798 Request saga order ... 
+PRINT   : [order]2025/10/14 17:41:22.007029 request url : http://10.1.0.119:9080/saga/order
+ERROR  : [order]2025/10/14 17:41:22.009133 Http Request 호출 실패#2: [404]: 404 page not found
+PRINT   : [order]2025/10/14 17:41:22.009324 Request saga order fail... 
+PRINT   : [order]2025/10/14 17:43:01.499633 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:43:01.499744 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:43:01.499777 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:43:01.499809 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:43:01.500031 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:43:02.138430 Quit order service .. 
+PRINT   : [order]2025/10/14 17:43:10.306119 process mode : debug
+PRINT   : [order]2025/10/14 17:43:10.306168 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:43:10.307612 [server]initSignal...
+PRINT   : [order]2025/10/14 17:43:10.308074 init state : true
+PRINT   : [order]2025/10/14 17:43:10.308525 [server]sigHandler
+PRINT   : [order]2025/10/14 17:43:10.310493 Start API server.. #1
+PRINT   : [order]2025/10/14 17:43:10.310776 Gin server start.
+PRINT   : [order]2025/10/14 17:43:16.082166 authMiddleware...
+PRINT   : [order]2025/10/14 17:43:16.084646 Request saga order ... 
+PRINT   : [order]2025/10/14 17:43:16.084879 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 17:43:31.306706 authMiddleware...
+PRINT   : [order]2025/10/14 17:43:31.309127 Request saga order ... 
+PRINT   : [order]2025/10/14 17:43:31.309245 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 17:43:36.493862 authMiddleware...
+PRINT   : [order]2025/10/14 17:43:36.495490 Request saga order ... 
+PRINT   : [order]2025/10/14 17:43:36.495575 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 17:44:37.227629 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 17:44:37.227727 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 17:44:37.227768 [server]shudownApp..
+PRINT   : [order]2025/10/14 17:44:37.227800 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 17:44:37.228607 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 17:44:37.327121 Quit order service .. 
+PRINT   : [order]2025/10/14 17:44:44.033081 process mode : debug
+PRINT   : [order]2025/10/14 17:44:44.033126 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 17:44:44.034480 [server]initSignal...
+PRINT   : [order]2025/10/14 17:44:44.034840 init state : true
+PRINT   : [order]2025/10/14 17:44:44.035555 Start API server.. #1
+PRINT   : [order]2025/10/14 17:44:44.035626 Gin server start.
+PRINT   : [order]2025/10/14 17:44:44.036031 [server]sigHandler
+PRINT   : [order]2025/10/14 17:44:46.786814 authMiddleware...
+PRINT   : [order]2025/10/14 17:44:46.789178 Request saga order ... 
+PRINT   : [order]2025/10/14 17:44:46.789470 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 17:59:55.915178 authMiddleware...
+PRINT   : [order]2025/10/14 17:59:55.919796 Request saga order ... 
+PRINT   : [order]2025/10/14 17:59:55.919914 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 18:02:24.974397 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 18:02:24.974488 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 18:02:24.974516 [server]shudownApp..
+PRINT   : [order]2025/10/14 18:02:24.974548 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 18:02:24.974797 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 18:02:25.222075 Quit order service .. 
+PRINT   : [order]2025/10/14 18:02:31.524491 process mode : debug
+PRINT   : [order]2025/10/14 18:02:31.524533 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 18:02:31.525920 [server]initSignal...
+PRINT   : [order]2025/10/14 18:02:31.526380 init state : true
+PRINT   : [order]2025/10/14 18:02:31.527003 Start API server.. #1
+PRINT   : [order]2025/10/14 18:02:31.527055 Gin server start.
+PRINT   : [order]2025/10/14 18:02:31.527634 [server]sigHandler
+PRINT   : [order]2025/10/14 18:02:49.795010 authMiddleware...
+PRINT   : [order]2025/10/14 18:02:49.797892 Request saga order ... 
+PRINT   : [order]2025/10/14 18:02:49.798201 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 18:03:05.590611 authMiddleware...
+PRINT   : [order]2025/10/14 18:03:05.592648 Request saga order ... 
+PRINT   : [order]2025/10/14 18:03:05.592747 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 18:03:12.504701 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 18:03:12.504788 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 18:03:12.504821 [server]shudownApp..
+PRINT   : [order]2025/10/14 18:03:12.504850 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 18:03:12.505147 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 18:03:12.534521 Quit order service .. 
+PRINT   : [order]2025/10/14 18:04:00.554226 process mode : debug
+PRINT   : [order]2025/10/14 18:04:00.554285 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [order]2025/10/14 18:04:00.555880 [server]initSignal...
+PRINT   : [order]2025/10/14 18:04:00.556811 init state : true
+PRINT   : [order]2025/10/14 18:04:00.556981 [server]sigHandler
+PRINT   : [order]2025/10/14 18:04:00.557571 Start API server.. #1
+PRINT   : [order]2025/10/14 18:04:00.557650 Gin server start.
+PRINT   : [order]2025/10/14 18:04:09.578982 authMiddleware...
+PRINT   : [order]2025/10/14 18:04:09.581735 Request saga order ... 
+PRINT   : [order]2025/10/14 18:04:09.581901 request url : http://10.1.0.119:9080/saga/order
+PRINT   : [order]2025/10/14 18:04:18.138471 [server] Accept Signal : 2
+PRINT   : [order]2025/10/14 18:04:18.138551 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/14 18:04:18.138584 [server]shudownApp..
+PRINT   : [order]2025/10/14 18:04:18.138613 Shutdown Rest server#1
+PRINT   : [order]2025/10/14 18:04:18.138916 Shutdown Rest server#2
+PRINT   : [order]2025/10/14 18:04:18.560989 Quit order service .. 

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"api-gateway/internal/logger"
 	"errors"
 	"fmt"
 	"net/http"
@@ -21,6 +22,7 @@ func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		path := ctx.Request.URL.Path
+		logger.Log.Print(2, " request url : %s", ctx.Request.URL.String())
 
 		if strings.HasPrefix(path, "/auth/login") ||
 			strings.HasPrefix(path, "/auth/refresh") ||

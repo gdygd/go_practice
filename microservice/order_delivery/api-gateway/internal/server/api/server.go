@@ -27,6 +27,7 @@ var serviceMap = map[string]string{
 	"/auth":     "http://localhost:9081",
 	"/order":    "http://localhost:9082",
 	"/delivery": "http://localhost:9083",
+	"/saga":     "http://localhost:9084",
 }
 
 // Server serves HTTP requests for our banking service.
@@ -87,20 +88,27 @@ func (server *Server) setupRouter() {
 	router.Any("/auth/*proxyPath", func(c *gin.Context) {
 		proxy := newReverseProxy(serviceMap["/auth"])
 		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/auth")
+		logger.Log.Print(2, "auth path : %s", c.Request.URL.Path)
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 
 	router.Any("/order/*proxyPath", func(c *gin.Context) {
 		proxy := newReverseProxy(serviceMap["/order"])
 		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/order")
-		// logger.Log.Print(2, "orders path : %s", c.Request.URL.Path)
-		fmt.Printf("orders path : %s", c.Request.URL.Path)
+		logger.Log.Print(2, "orders path : %s", c.Request.URL.Path)
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 
 	router.Any("/delivery/*proxyPath", func(c *gin.Context) {
 		proxy := newReverseProxy(serviceMap["/delivery"])
 		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/delivery")
+		logger.Log.Print(2, "delivery path : %s", c.Request.URL.Path)
+		proxy.ServeHTTP(c.Writer, c.Request)
+	})
+	router.Any("/saga/*proxyPath", func(c *gin.Context) {
+		proxy := newReverseProxy(serviceMap["/saga"])
+		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/saga")
+		logger.Log.Print(2, "saga path : %s", c.Request.URL.Path)
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 

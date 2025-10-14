@@ -39,3 +39,8 @@ type DeliveryResponse struct {
 	ReqDt      time.Time `json:"req_dt"`
 	ComplDt    time.Time `json:"compl_dt"`
 }
+
+type orderRequest struct {
+	ORDER_ID   int `json:"orderId" binding:"required"`
+	TOT_AMOUNT int `json:"tot_amount" binding:"required"`
+}

@@ -1,0 +1,75 @@
+PRINT   : [apigw]2025/10/14 16:23:30.001257 process mode : debug
+PRINT   : [apigw]2025/10/14 16:23:30.001314 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/14 16:23:30.003663 [server]initSignal...
+PRINT   : [apigw]2025/10/14 16:23:30.004187 init state : true
+PRINT   : [apigw]2025/10/14 16:23:30.004770 Start API server.. #1
+PRINT   : [apigw]2025/10/14 16:23:30.004811 Gin server start.
+PRINT   : [apigw]2025/10/14 16:23:30.005054 [server]sigHandler
+PRINT   : [apigw]2025/10/14 17:34:43.932457 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/14 17:34:43.932545 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/14 17:34:43.932620 [server]shudownApp..
+PRINT   : [apigw]2025/10/14 17:34:43.932671 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/14 17:34:43.933112 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/14 17:34:44.707096 Quit api-gateway service .. 
+PRINT   : [apigw]2025/10/14 17:34:46.406596 process mode : debug
+PRINT   : [apigw]2025/10/14 17:34:46.406656 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/14 17:34:46.408537 [server]initSignal...
+PRINT   : [apigw]2025/10/14 17:34:46.409130 init state : true
+PRINT   : [apigw]2025/10/14 17:34:46.409570 [server]sigHandler
+PRINT   : [apigw]2025/10/14 17:34:46.414761 Start API server.. #1
+PRINT   : [apigw]2025/10/14 17:34:46.414978 Gin server start.
+PRINT   : [apigw]2025/10/14 17:59:33.716282 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/14 17:59:33.716386 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/14 17:59:33.716427 [server]shudownApp..
+PRINT   : [apigw]2025/10/14 17:59:33.716479 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/14 17:59:33.717883 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/14 17:59:34.661505 Quit api-gateway service .. 
+PRINT   : [apigw]2025/10/14 17:59:40.935474 process mode : debug
+PRINT   : [apigw]2025/10/14 17:59:40.935529 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/14 17:59:40.937402 [server]initSignal...
+PRINT   : [apigw]2025/10/14 17:59:40.937819 init state : true
+PRINT   : [apigw]2025/10/14 17:59:40.938762 Start API server.. #1
+PRINT   : [apigw]2025/10/14 17:59:40.938836 Gin server start.
+PRINT   : [apigw]2025/10/14 17:59:40.939407 [server]sigHandler
+PRINT   : [apigw]2025/10/14 17:59:55.911412  request url : /order/request2
+PRINT   : [apigw]2025/10/14 17:59:55.911807 orders path : /request2
+PRINT   : [apigw]2025/10/14 17:59:55.920886  request url : /saga/order
+PRINT   : [apigw]2025/10/14 18:02:49.793596  request url : /order/request2
+PRINT   : [apigw]2025/10/14 18:02:49.793815 orders path : /request2
+PRINT   : [apigw]2025/10/14 18:02:49.799527  request url : /saga/order
+PRINT   : [apigw]2025/10/14 18:02:49.799674 saga path : /order
+PRINT   : [apigw]2025/10/14 18:03:05.589570  request url : /order/request2
+PRINT   : [apigw]2025/10/14 18:03:05.589838 orders path : /request2
+PRINT   : [apigw]2025/10/14 18:03:05.594121  request url : /saga/order
+PRINT   : [apigw]2025/10/14 18:03:05.594278 saga path : /order
+PRINT   : [apigw]2025/10/14 18:03:12.857143 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/14 18:03:12.857216 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/14 18:03:12.857263 [server]shudownApp..
+PRINT   : [apigw]2025/10/14 18:03:12.857292 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/14 18:03:12.857684 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/14 18:03:12.976283 Quit api-gateway service .. 
+PRINT   : [apigw]2025/10/14 18:04:00.209656 process mode : debug
+PRINT   : [apigw]2025/10/14 18:04:00.209801 남은 인자들:
+%!(EXTRA []string=[])
+PRINT   : [apigw]2025/10/14 18:04:00.212110 [server]initSignal...
+PRINT   : [apigw]2025/10/14 18:04:00.212894 init state : true
+PRINT   : [apigw]2025/10/14 18:04:00.213136 [server]sigHandler
+PRINT   : [apigw]2025/10/14 18:04:00.215205 Start API server.. #1
+PRINT   : [apigw]2025/10/14 18:04:00.215326 Gin server start.
+PRINT   : [apigw]2025/10/14 18:04:09.576270  request url : /order/request2
+PRINT   : [apigw]2025/10/14 18:04:09.576867 orders path : /request2
+PRINT   : [apigw]2025/10/14 18:04:09.583085  request url : /saga/order
+PRINT   : [apigw]2025/10/14 18:04:09.583232 saga path : /order
+PRINT   : [apigw]2025/10/14 18:04:18.419383 [server] Accept Signal : 2
+PRINT   : [apigw]2025/10/14 18:04:18.419453 [server]SIGINT(2)
+
+PRINT   : [apigw]2025/10/14 18:04:18.419489 [server]shudownApp..
+PRINT   : [apigw]2025/10/14 18:04:18.419531 Shutdown Rest server#1
+PRINT   : [apigw]2025/10/14 18:04:18.419909 Shutdown Rest server#2
+PRINT   : [apigw]2025/10/14 18:04:19.219229 Quit api-gateway service .. 

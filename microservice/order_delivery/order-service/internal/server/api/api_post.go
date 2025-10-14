@@ -1,7 +1,10 @@
 package api
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"order-service/internal/logger"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,6 +20,44 @@ func (server *Server) requestOrder(ctx *gin.Context) {
 
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, convertOrder(ord))
+}
+
+const BASE_URL = "http://10.1.0.119:9080"
+
+func (server *Server) requestOrder2(ctx *gin.Context) {
+	var req orderRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	ord, err := server.dbHnd.RequestOrder(ctx, getOrderPrarm(req))
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	// request orchestrator
+	// payload, _ := json.Marshal(ord)
+	// url := "http://10.1.0.119:9080/saga/order"
+	// resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
+	// if err != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, errorResponse(fmt.Errorf("orchestrator 호출 실패: %w", err)))
+	// }
+	// defer resp.Body.Close()
+
+	logger.Log.Print(2, "Request saga order ... ")
+
+	payload, _ := json.Marshal(ord)
+	err = HttpRequest(ctx, payload, "POST", BASE_URL)
+	if err != nil {
+		logger.Log.Print(2, "Request saga order fail... ")
+		ctx.JSON(http.StatusInternalServerError, errorResponse(fmt.Errorf("orchestrator 호출 실패: %w", err)))
 		return
 	}
 

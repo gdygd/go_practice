@@ -208,3 +208,10 @@ PRINT   : [order]2025/10/13 15:27:07.306348 init state : true
 PRINT   : [order]2025/10/13 15:27:07.306898 [server]sigHandler
 PRINT   : [order]2025/10/13 15:27:07.307229 Start API server.. #1
 PRINT   : [order]2025/10/13 15:27:07.307305 Gin server start.
+PRINT   : [order]2025/10/13 18:00:01.644426 [server] Accept Signal : 2
+PRINT   : [order]2025/10/13 18:00:01.644601 [server]SIGINT(2)
+
+PRINT   : [order]2025/10/13 18:00:01.644652 [server]shudownApp..
+PRINT   : [order]2025/10/13 18:00:01.644691 Shutdown Rest server#1
+PRINT   : [order]2025/10/13 18:00:01.645101 Shutdown Rest server#2
+PRINT   : [order]2025/10/13 18:00:01.839020 Quit order service .. 
