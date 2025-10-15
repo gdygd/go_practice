@@ -19,3 +19,11 @@ func getOrderPrarm(order orderRequest) db.ORDER {
 		TOT_AMOUNT: order.TotalAmout,
 	}
 }
+
+func convertSagaOrder(order db.ORDER) sagaOrderRequest {
+	return sagaOrderRequest{
+		OrderId:    order.ORDER_ID,
+		Username:   order.USER_NM,
+		TotalAmout: order.TOT_AMOUNT,
+	}
+}

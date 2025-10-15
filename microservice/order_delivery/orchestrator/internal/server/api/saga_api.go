@@ -11,20 +11,24 @@ import (
 func (server *Server) sagaOrder(ctx *gin.Context) {
 	var req orderRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
+		logger.Log.Print(2, "body parsing error.. %v", err)
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	logger.Log.Print(2, "orchestrator start, order : %d", req.ORDER_ID)
+	logger.Log.Print(2, "orchestrator start, order : %d", req.OrderId)
 
 	// step 1 : call delivery service
-	if err := callDeliveryService(req.ORDER_ID); err != nil {
-		ctx.JSON(http.StatusInternalServerError, errorResponse(fmt.Errorf("delivery 호출 실패: %w", err)))
+	statecode, err := callDeliveryService(ctx, req.OrderId)
+	if err != nil {
+		logger.Log.Print(2, "call delivery service error.. %v", err)
+		ctx.JSON(statecode, errorResponse(fmt.Errorf("delivery 호출 실패: %w", err)))
+		return
 	}
 
 	// confirm order
 
-	logger.Log.Print(2, "orchestrator end, order : %d", req.ORDER_ID)
+	logger.Log.Print(2, "orchestrator end, order : %d", req.OrderId)
 
 	ctx.JSON(http.StatusOK, nil)
 }

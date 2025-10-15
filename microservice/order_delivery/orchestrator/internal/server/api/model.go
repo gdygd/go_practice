@@ -33,7 +33,7 @@ type orderCancel struct {
 
 type DeliveryResponse struct {
 	DeliveryId int       `json:"id"`
-	OrderId    int       `json:"orderId"`
+	OrderId    int       `json:"order_id"`
 	State      int       `json:"state"`
 	Address    string    `json:"address"`
 	ReqDt      time.Time `json:"req_dt"`
@@ -41,6 +41,7 @@ type DeliveryResponse struct {
 }
 
 type orderRequest struct {
-	ORDER_ID   int `json:"orderId" binding:"required"`
-	TOT_AMOUNT int `json:"tot_amount" binding:"required"`
+	OrderId int `json:"order_id" binding:"required"`
+	// Username   string `json:"username" binding:"required,alphanum"`
+	// TotalAmout int `json:"amount" binding:"required"`
 }

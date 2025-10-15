@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"order-service/internal/logger"
 
+	"github.com/gdygd/goglib"
 	"github.com/gin-gonic/gin"
 )
 
@@ -53,11 +54,15 @@ func (server *Server) requestOrder2(ctx *gin.Context) {
 
 	logger.Log.Print(2, "Request saga order ... ")
 
-	payload, _ := json.Marshal(ord)
-	err = HttpRequest(ctx, payload, "POST", BASE_URL)
+	sagaObj := convertSagaOrder(ord)
+	payload, _ := json.Marshal(sagaObj)
+	logger.Log.Print(2, "id:%d, nm:%s, amount:%d", sagaObj.OrderId, sagaObj.Username, sagaObj.TotalAmout)
+
+	url := fmt.Sprintf("%s/saga/order", BASE_URL)
+	statuscode, _, err := goglib.HttpRequest(ctx, payload, "POST", url)
 	if err != nil {
 		logger.Log.Print(2, "Request saga order fail... ")
-		ctx.JSON(http.StatusInternalServerError, errorResponse(fmt.Errorf("orchestrator 호출 실패: %w", err)))
+		ctx.JSON(statuscode, errorResponse(fmt.Errorf("orchestrator 호출 실패: %w", err)))
 		return
 	}
 

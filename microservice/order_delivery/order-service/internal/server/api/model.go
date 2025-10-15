@@ -27,6 +27,12 @@ type orderRequest struct {
 	TotalAmout int    `json:"amount" binding:"required"`
 }
 
+type sagaOrderRequest struct {
+	OrderId    int    `json:"order_id" binding:"required"`
+	Username   string `json:"username" binding:"required,alphanum"`
+	TotalAmout int    `json:"amount" binding:"required"`
+}
+
 type orderCancel struct {
 	OrderID int `uri:"order_id" binding:"required"`
 }

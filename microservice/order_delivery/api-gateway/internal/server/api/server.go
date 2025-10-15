@@ -106,6 +106,13 @@ func (server *Server) setupRouter() {
 		proxy.ServeHTTP(c.Writer, c.Request)
 	})
 	router.Any("/saga/*proxyPath", func(c *gin.Context) {
+		for key, values := range c.Request.Header {
+			for _, v := range values {
+				logger.Log.Print(2, "saga header key : %v, value : %v", key, v)
+
+			}
+		}
+
 		proxy := newReverseProxy(serviceMap["/saga"])
 		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/saga")
 		logger.Log.Print(2, "saga path : %s", c.Request.URL.Path)
