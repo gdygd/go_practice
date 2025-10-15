@@ -11,14 +11,31 @@ import (
 
 const BASE_URL = "http://10.1.0.119:9080"
 
-func callOrderServiceConfirm(orderId int) error {
+func callOrderServiceConfirm(ctx *gin.Context, orderId int) (int, error) {
+	url := fmt.Sprintf("%s/order/confirm/%d", BASE_URL, orderId)
+	logger.Log.Print(2, "call callOrderServiceConfirm url : %s", url)
 
-	return nil
+	statuscode, _, err := goglib.HttpRequest(ctx, nil, "POST", url)
+	if err != nil {
+		logger.Log.Print(2, "Request saga order confirm fail... ")
+		return statuscode, fmt.Errorf("Request saga order confirm fail: %w", err)
+	}
+
+	return statuscode, nil
 }
 
-func callOrderServiceCancel(orderId int) error {
+func callOrderServiceCancel(ctx *gin.Context, orderId int) (int, error) {
 
-	return nil
+	url := fmt.Sprintf("%s/order/cancel/%d", BASE_URL, orderId)
+	logger.Log.Print(2, "call callOrderServiceConfirm url : %s", url)
+
+	statuscode, _, err := goglib.HttpRequest(ctx, nil, "POST", url)
+	if err != nil {
+		logger.Log.Print(2, "Request saga order confirm fail... ")
+		return statuscode, fmt.Errorf("Request saga order confirm fail: %w", err)
+	}
+
+	return statuscode, nil
 }
 
 func callDeliveryService(ctx *gin.Context, orderId int) (int, error) {
