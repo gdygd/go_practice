@@ -32,32 +32,33 @@ var serviceMap = map[string]string{
 
 // Server serves HTTP requests for our banking service.
 type Server struct {
-	wg         *sync.WaitGroup
-	srv        *http.Server
-	config     *config.Config
-	tokenMaker token.Maker
-	router     *gin.Engine
-	service    service.ServiceInterface
-	dbHnd      db.DbHandler
-	objdb      *memory.RedisDb
+	wg           *sync.WaitGroup
+	srv          *http.Server
+	config       *config.Config
+	tokenMaker   token.Maker
+	router       *gin.Engine
+	service      service.ServiceInterface
+	dbHnd        db.DbHandler
+	objdb        *memory.RedisDb
+	ch_terminate chan bool
 }
 
-func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
+func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*Server, error) {
 	// init service
 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
 	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
-
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker:%w", err)
 	}
 
 	server := &Server{
-		wg:         wg,
-		config:     ct.Config,
-		tokenMaker: tokenMaker,
-		service:    apiservice,
-		dbHnd:      ct.DbHnd,
-		objdb:      ct.ObjDb,
+		wg:           wg,
+		config:       ct.Config,
+		tokenMaker:   tokenMaker,
+		service:      apiservice,
+		dbHnd:        ct.DbHnd,
+		objdb:        ct.ObjDb,
+		ch_terminate: ch_terminate,
 	}
 
 	server.setupRouter()
@@ -80,6 +81,9 @@ func (server *Server) setupRouter() {
 	// fmt.Printf("%v, \n", server.config.AllowOrigins)
 
 	// addresses := strings.Split(server.config.AllowOrigins, ",")
+
+	router.GET("/heartbeat", server.heartbeat)
+	router.GET("/terminate", server.terminate)
 
 	// router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))
@@ -109,7 +113,6 @@ func (server *Server) setupRouter() {
 		for key, values := range c.Request.Header {
 			for _, v := range values {
 				logger.Log.Print(2, "saga header key : %v, value : %v", key, v)
-
 			}
 		}
 
@@ -134,6 +137,7 @@ func (server *Server) Start() error {
 }
 
 func (server *Server) Shutdown() error {
+	logger.Log.Print(2, "ShutDown..#1")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	defer server.wg.Done()
@@ -141,5 +145,6 @@ func (server *Server) Shutdown() error {
 		logger.Log.Error("Server Shutdown:", err)
 		return err
 	}
+	logger.Log.Print(2, "ShutDown..#2")
 	return nil
 }

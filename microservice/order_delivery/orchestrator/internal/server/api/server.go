@@ -23,21 +23,21 @@ import (
 
 // Server serves HTTP requests for our banking service.
 type Server struct {
-	wg         *sync.WaitGroup
-	srv        *http.Server
-	config     *config.Config
-	tokenMaker token.Maker
-	router     *gin.Engine
-	service    service.ServiceInterface
-	dbHnd      db.DbHandler
-	objdb      *memory.RedisDb
+	wg           *sync.WaitGroup
+	srv          *http.Server
+	config       *config.Config
+	tokenMaker   token.Maker
+	router       *gin.Engine
+	service      service.ServiceInterface
+	dbHnd        db.DbHandler
+	objdb        *memory.RedisDb
+	ch_terminate chan bool
 }
 
-func NewServer(wg *sync.WaitGroup, ct *container.Container) (*Server, error) {
+func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*Server, error) {
 	// init service
 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
 	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
-
 	if err != nil {
 		return nil, fmt.Errorf("cannot create token maker:%w", err)
 	}
@@ -66,6 +66,9 @@ func (server *Server) setupRouter() {
 	fmt.Printf("%v, \n", server.config.AllowOrigins)
 
 	addresses := strings.Split(server.config.AllowOrigins, ",")
+
+	router.GET("/heartbeat", server.heartbeat)
+	router.GET("/terminate", server.terminate)
 
 	router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))

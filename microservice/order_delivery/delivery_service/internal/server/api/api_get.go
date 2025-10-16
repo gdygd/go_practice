@@ -1,15 +1,15 @@
 package api
 
 import (
-	"delivery_service/internal/logger"
 	"net/http"
 	"time"
+
+	"delivery_service/internal/logger"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (server *Server) testapi(ctx *gin.Context) {
-
 	time.Sleep(time.Microsecond * 3000)
 
 	strdt, err := server.dbHnd.ReadSysdate(ctx)
@@ -19,6 +19,16 @@ func (server *Server) testapi(ctx *gin.Context) {
 	logger.Log.Print(2, "testapi :%v", strdt)
 
 	ctx.JSON(http.StatusOK, "hello")
+}
+
+func (server *Server) heartbeat(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, nil)
+}
+
+func (server *Server) terminate(ctx *gin.Context) {
+	server.ch_terminate <- true
+	logger.Log.Print(2, "Accept terminate command..")
+	ctx.JSON(http.StatusOK, nil)
 }
 
 func (server *Server) getDeliveryInfo(ctx *gin.Context) {

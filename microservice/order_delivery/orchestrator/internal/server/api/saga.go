@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+
 	"order-delivery-saga/internal/logger"
 
 	"github.com/gdygd/goglib"
@@ -15,7 +16,7 @@ func callOrderServiceConfirm(ctx *gin.Context, orderId int) (int, error) {
 	url := fmt.Sprintf("%s/order/confirm/%d", BASE_URL, orderId)
 	logger.Log.Print(2, "call callOrderServiceConfirm url : %s", url)
 
-	statuscode, _, err := goglib.HttpRequest(ctx, nil, "POST", url)
+	statuscode, _, err := goglib.HttpRequest(ctx, ctx.Request.Header, nil, "POST", url)
 	if err != nil {
 		logger.Log.Print(2, "Request saga order confirm fail... ")
 		return statuscode, fmt.Errorf("Request saga order confirm fail: %w", err)
@@ -25,11 +26,10 @@ func callOrderServiceConfirm(ctx *gin.Context, orderId int) (int, error) {
 }
 
 func callOrderServiceCancel(ctx *gin.Context, orderId int) (int, error) {
-
 	url := fmt.Sprintf("%s/order/cancel/%d", BASE_URL, orderId)
 	logger.Log.Print(2, "call callOrderServiceConfirm url : %s", url)
 
-	statuscode, _, err := goglib.HttpRequest(ctx, nil, "POST", url)
+	statuscode, _, err := goglib.HttpRequest(ctx, ctx.Request.Header, nil, "POST", url)
 	if err != nil {
 		logger.Log.Print(2, "Request saga order confirm fail... ")
 		return statuscode, fmt.Errorf("Request saga order confirm fail: %w", err)
@@ -56,7 +56,7 @@ func callDeliveryService(ctx *gin.Context, orderId int) (int, error) {
 	// }
 
 	payload, _ := json.Marshal(delivery)
-	statuscode, _, err := goglib.HttpRequest(ctx, payload, "POST", url)
+	statuscode, _, err := goglib.HttpRequest(ctx, ctx.Request.Header, payload, "POST", url)
 	if err != nil {
 		logger.Log.Print(2, "Request saga delivery fail... ")
 		return statuscode, fmt.Errorf("Request saga delivery fail: %w", err)

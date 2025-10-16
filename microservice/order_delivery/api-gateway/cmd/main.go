@@ -1,24 +1,27 @@
 package main
 
 import (
-	"api-gateway/internal/app"
-	"api-gateway/internal/container"
-	"api-gateway/internal/logger"
 	"flag"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"api-gateway/internal/app"
+	"api-gateway/internal/container"
+	"api-gateway/internal/logger"
 )
 
 // ------------------------------------------------------------------------------
 // local
 // ------------------------------------------------------------------------------
-var ct *container.Container
-var server *app.Application = nil
-var isShutDownApp bool = false
-var terminate bool = false
+var (
+	ct            *container.Container
+	server        *app.Application = nil
+	isShutDownApp bool             = false
+	terminate     bool             = false
+)
 
 // ------------------------------------------------------------------------------
 // sigHandler
@@ -50,7 +53,7 @@ func sigHandler(chSig chan os.Signal) {
 			// os.Exit(0)
 		default:
 			logger.Log.Print(2, "Unknown signal(%d)\n", signal)
-			//panic(signal)
+			// panic(signal)
 		}
 	}
 }
@@ -121,7 +124,6 @@ func shudownApp() {
 // clearEnv
 // ------------------------------------------------------------------------------
 func clearEnv() {
-
 }
 
 func main() {
@@ -139,20 +141,29 @@ func main() {
 		logger.Log.Error("initEnv Error...")
 	}
 
+	var ch_terminate chan bool = make(chan bool)
 	// NewApplication()
 	if ok {
-		server = app.NewApplication(ct)
+		server = app.NewApplication(ct, ch_terminate)
 		go server.Start()
 	}
 
 	for ok {
-		time.Sleep(time.Millisecond * 1000)
+		select {
+		case <-ch_terminate:
+			logger.Log.Print(2, "Server shutdown ok.")
+			shudownApp()
+			// request manage-service
+			terminate = true
+		default:
+		}
+
 		if terminate {
 			logger.Log.Print(2, "Quit api-gateway service .. ")
 			break
 		}
 
+		time.Sleep(time.Millisecond * 1000)
 		// check manage process
-
 	}
 }

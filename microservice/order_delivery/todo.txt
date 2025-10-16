@@ -1,0 +1,6 @@
+-서비스 관리 용 서비스 추가 (manage-service)
+ > /hearbeat로 응답여부로 서비스 관리
+   >>  3회 연속 heartbeat 실패 시 재시작
+-cli service추가
+-grpc 적용
+-

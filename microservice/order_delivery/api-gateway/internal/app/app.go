@@ -1,10 +1,11 @@
 package app
 
 import (
+	"sync"
+
 	"api-gateway/internal/container"
 	"api-gateway/internal/logger"
 	"api-gateway/internal/server/api"
-	"sync"
 )
 
 type Application struct {
@@ -12,12 +13,12 @@ type Application struct {
 	ApiServer *api.Server
 }
 
-func NewApplication(ct *container.Container) *Application {
+func NewApplication(ct *container.Container, ch_terminate chan bool) *Application {
 	var wg *sync.WaitGroup = &sync.WaitGroup{}
 
 	// new httpserver
 	// newserver(container)
-	apisvr, err := api.NewServer(wg, ct)
+	apisvr, err := api.NewServer(wg, ct, ch_terminate)
 	if err != nil {
 		logger.Log.Error("Api server initialization fail.. %v", err)
 		return nil
@@ -31,12 +32,13 @@ func NewApplication(ct *container.Container) *Application {
 
 func (app Application) Start() {
 	app.wg.Add(1)
-	logger.Log.Print(3, "Start API server.. #1")
+	logger.Log.Print(3, "Start API-GW server.. #1")
 	go app.ApiServer.Start()
 }
 
 func (app Application) Shutdown() {
-	logger.Log.Print(3, "Shutdown Rest server#1")
+	logger.Log.Print(3, "Shutdown API-GW server#1")
 	app.ApiServer.Shutdown()
-	logger.Log.Print(3, "Shutdown Rest server#2")
+	logger.Log.Print(3, "Shutdown API-GW server#2")
+	// app.Terminate <- true
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
 	"order-service/internal/logger"
 
 	"github.com/gdygd/goglib"
@@ -18,7 +19,6 @@ func (server *Server) requestOrder(ctx *gin.Context) {
 	}
 
 	ord, err := server.dbHnd.RequestOrder(ctx, getOrderPrarm(req))
-
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -37,7 +37,6 @@ func (server *Server) requestOrder2(ctx *gin.Context) {
 	}
 
 	ord, err := server.dbHnd.RequestOrder(ctx, getOrderPrarm(req))
-
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -59,7 +58,7 @@ func (server *Server) requestOrder2(ctx *gin.Context) {
 	logger.Log.Print(2, "id:%d, nm:%s, amount:%d", sagaObj.OrderId, sagaObj.Username, sagaObj.TotalAmout)
 
 	url := fmt.Sprintf("%s/saga/order", BASE_URL)
-	statuscode, _, err := goglib.HttpRequest(ctx, payload, "POST", url)
+	statuscode, _, err := goglib.HttpRequest(ctx, ctx.Request.Header, payload, "POST", url)
 	if err != nil {
 		logger.Log.Print(2, "Request saga order fail... ")
 		ctx.JSON(statuscode, errorResponse(fmt.Errorf("orchestrator 호출 실패: %w", err)))
@@ -81,7 +80,6 @@ func (server *Server) cancelOrder(ctx *gin.Context) {
 	}
 
 	err := server.dbHnd.CancelOrder(ctx, int(req.ID))
-
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -98,7 +96,6 @@ func (server *Server) confirmOrder(ctx *gin.Context) {
 	}
 
 	err := server.dbHnd.ConfirmOrder(ctx, int(req.ID))
-
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
