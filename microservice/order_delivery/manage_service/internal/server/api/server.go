@@ -8,17 +8,22 @@ import (
 	"sync"
 	"time"
 
-	"auth-service/internal/config"
-	"auth-service/internal/container"
-	"auth-service/internal/db"
-	"auth-service/internal/logger"
-	"auth-service/internal/memory"
-	"auth-service/internal/service"
-	apiserv "auth-service/internal/service/api"
+	"manage-service/internal/cache/memory"
+	"manage-service/internal/config"
+	"manage-service/internal/container"
+	"manage-service/internal/db"
+	"manage-service/internal/logger"
+	"manage-service/internal/service"
+	apiserv "manage-service/internal/service/api"
 
 	"github.com/gdygd/goglib/token"
 
 	"github.com/gin-gonic/gin"
+)
+
+const (
+	R_TIME_OUT = 5 * time.Second
+	W_TIME_OUT = 5 * time.Second
 )
 
 // Server serves HTTP requests for our banking service.
@@ -57,6 +62,8 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 	server.srv = &http.Server{}
 	server.srv.Addr = ct.Config.HTTPServerAddress
 	server.srv.Handler = server.router.Handler()
+	server.srv.ReadTimeout = R_TIME_OUT
+	server.srv.WriteTimeout = W_TIME_OUT
 
 	return server, nil
 }
@@ -74,9 +81,6 @@ func (server *Server) setupRouter() {
 	router.Use(corsMiddleware(addresses))
 	router.Use(authMiddleware(server.tokenMaker))
 	router.GET("/test", server.testapi)
-	router.POST("/login", server.userLogin)
-	router.POST("/verify", server.tokenVerify)
-	router.POST("/refresh", server.renewAccessToken)
 
 	server.router = router
 }

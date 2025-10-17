@@ -28,5 +28,6 @@ func (server *Server) heartbeat(ctx *gin.Context) {
 func (server *Server) terminate(ctx *gin.Context) {
 	server.ch_terminate <- true
 	logger.Log.Print(2, "Accept terminate command..")
+	time.Sleep(time.Second * 10)
 	ctx.JSON(http.StatusOK, nil)
 }

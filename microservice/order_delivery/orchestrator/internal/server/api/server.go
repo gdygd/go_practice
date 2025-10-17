@@ -21,6 +21,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	R_TIME_OUT = 5 * time.Second
+	W_TIME_OUT = 5 * time.Second
+)
+
 // Server serves HTTP requests for our banking service.
 type Server struct {
 	wg           *sync.WaitGroup
@@ -43,12 +48,13 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 	}
 
 	server := &Server{
-		wg:         wg,
-		config:     ct.Config,
-		tokenMaker: tokenMaker,
-		service:    apiservice,
-		dbHnd:      ct.DbHnd,
-		objdb:      ct.ObjDb,
+		wg:           wg,
+		config:       ct.Config,
+		tokenMaker:   tokenMaker,
+		service:      apiservice,
+		dbHnd:        ct.DbHnd,
+		objdb:        ct.ObjDb,
+		ch_terminate: ch_terminate,
 	}
 
 	server.setupRouter()
@@ -56,6 +62,8 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 	server.srv = &http.Server{}
 	server.srv.Addr = ct.Config.HTTPServerAddress
 	server.srv.Handler = server.router.Handler()
+	server.srv.ReadTimeout = R_TIME_OUT
+	server.srv.WriteTimeout = W_TIME_OUT
 
 	return server, nil
 }

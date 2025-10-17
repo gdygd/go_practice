@@ -23,6 +23,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const (
+	R_TIME_OUT = 5 * time.Second
+	W_TIME_OUT = 5 * time.Second
+)
+
 var serviceMap = map[string]string{
 	"/auth":     "http://localhost:9081",
 	"/order":    "http://localhost:9082",
@@ -66,6 +71,8 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 	server.srv = &http.Server{}
 	server.srv.Addr = ct.Config.HTTPServerAddress
 	server.srv.Handler = server.router.Handler()
+	server.srv.ReadTimeout = R_TIME_OUT
+	server.srv.WriteTimeout = W_TIME_OUT
 
 	return server, nil
 }
