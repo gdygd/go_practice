@@ -45,7 +45,7 @@ func initServices() {
 
 func (s *Service) CheckHeartbeat() bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // 반드시 cancel 호출로 리소스 해제
+	defer cancel()
 
 	// HttpRequest안에서 timeout처리가 됨.
 	statuscode, _, err := goglib.HttpRequest(ctx, http.Header{}, nil, "GET", s.Url+"/heartbeat")
@@ -104,7 +104,7 @@ func (s *Service) Terminate() {
 	logger.Log.Print(2, "Terminate service [%s]", s.Name)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	defer cancel() // 반드시 cancel 호출로 리소스 해제
+	defer cancel()
 
 	// HttpRequest안에서 timeout처리가 됨.
 	statuscode, _, err := goglib.HttpRequest(ctx, http.Header{}, nil, "GET", s.Url+"/terminate")

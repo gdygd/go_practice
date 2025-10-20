@@ -6,5 +6,7 @@ import (
 )
 
 func main() {
+	cmd.InitServices()
+
 	cmd.Execute()
 }

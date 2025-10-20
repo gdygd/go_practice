@@ -102,6 +102,9 @@ func initEnv() bool {
 		return false
 	}
 
+	// setdebug level
+	logger.Log.SetLevel(ct.Config.DebugLv)
+
 	// signal
 	initSignal()
 	return true
