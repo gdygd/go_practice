@@ -31,6 +31,7 @@ func InitServices() {
 
 type StateCommand struct {
 	serviceName string
+	commStt     bool
 }
 
 type ResetCommand struct {

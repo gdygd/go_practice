@@ -139,6 +139,10 @@ func (server *Server) Start() error {
 		logger.Log.Error("listen error. %v", err)
 		return err
 	}
+	// if err := server.srv.ListenAndServeTLS("./tls/server.crt", "./tls/server.key"); err != nil && err != http.ErrServerClosed {
+	// 	logger.Log.Error("listen error. %v", err)
+	// 	return err
+	// }
 
 	return nil
 }

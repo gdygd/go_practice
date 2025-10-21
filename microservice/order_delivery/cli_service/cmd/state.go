@@ -28,9 +28,11 @@ Example:
 func init() {
 	rootCmd.AddCommand(stateCmd)
 	stateCmd.Flags().StringVarP(&stateArg.serviceName, "nm", "n", "", "서비스 이름 (예: auth-service)")
+	stateCmd.Flags().BoolVar(&stateArg.commStt, "comm", false, "Check comm state for service")
 }
 
 func serviceState(cmd *cobra.Command, args []string) {
+	fmt.Printf("cmd : %s, %v", stateArg.serviceName, stateArg.commStt)
 	if stateArg.serviceName == "" {
 		fmt.Println("전체 서비스 상태 조회")
 		checkService()
