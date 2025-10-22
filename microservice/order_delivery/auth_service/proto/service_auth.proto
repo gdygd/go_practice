@@ -23,7 +23,7 @@ service AuthService {
     // rpc LoginUser (LoginUserRequest) returns (LoginUserResponse);
     rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {
         option (google.api.http) = {
-            post: "/login"
+            post: "/v1/login"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {

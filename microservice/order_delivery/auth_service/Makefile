@@ -17,7 +17,6 @@ proto:
 	@echo "Generating Go files from proto..."
 	rm -f $(OUT_DIR)/*.go
 	protoc \
-		-I. \
 		-I$(PROTOBUF_DIR) \
 		-I$(GENPROTO_DIR) \
 		-I$(GATEWAY_DIR) \
@@ -25,6 +24,6 @@ proto:
 		--go_out=$(OUT_DIR) --go_opt=paths=source_relative \
 		--go-grpc_out=$(OUT_DIR) --go-grpc_opt=paths=source_relative \
 		--grpc-gateway_out=$(OUT_DIR) --grpc-gateway_opt=paths=source_relative \
-		proto/rpc_service.proto
+		proto/*.proto
 
 .PHONY: build proto test

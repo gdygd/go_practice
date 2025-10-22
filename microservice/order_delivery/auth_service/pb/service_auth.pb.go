@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v6.30.2
-// source: proto/rpc_service.proto
+// source: service_auth.proto
 
 package pb
 
@@ -23,20 +23,20 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-var File_proto_rpc_service_proto protoreflect.FileDescriptor
+var File_service_auth_proto protoreflect.FileDescriptor
 
-const file_proto_rpc_service_proto_rawDesc = "" +
+const file_service_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x17proto/rpc_service.proto\x12\x02pb\x1a\x1cgoogle/api/annotations.proto\x1a\x15google/api/http.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x11rpc_message.proto2\xab\x01\n" +
-	"\vAuthService\x12\x9b\x01\n" +
-	"\tLoginUser\x12\x14.pb.LoginUserRequest\x1a\x15.pb.LoginUserResponse\"a\x92AM\x12\n" +
-	"Login user\x1a?Use this API to login user and get access token & refresh token\x82\xd3\xe4\x93\x02\v:\x01*\"\x06/loginB\x11Z\x0fauth-service/pbb\x06proto3"
+	"\x12service_auth.proto\x12\x02pb\x1a\x1cgoogle/api/annotations.proto\x1a\x15google/api/http.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x11rpc_message.proto2\xae\x01\n" +
+	"\vAuthService\x12\x9e\x01\n" +
+	"\tLoginUser\x12\x14.pb.LoginUserRequest\x1a\x15.pb.LoginUserResponse\"d\x92AM\x12\n" +
+	"Login user\x1a?Use this API to login user and get access token & refresh token\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/loginB\x11Z\x0fauth-service/pbb\x06proto3"
 
-var file_proto_rpc_service_proto_goTypes = []any{
+var file_service_auth_proto_goTypes = []any{
 	(*LoginUserRequest)(nil),  // 0: pb.LoginUserRequest
 	(*LoginUserResponse)(nil), // 1: pb.LoginUserResponse
 }
-var file_proto_rpc_service_proto_depIdxs = []int32{
+var file_service_auth_proto_depIdxs = []int32{
 	0, // 0: pb.AuthService.LoginUser:input_type -> pb.LoginUserRequest
 	1, // 1: pb.AuthService.LoginUser:output_type -> pb.LoginUserResponse
 	1, // [1:2] is the sub-list for method output_type
@@ -46,9 +46,9 @@ var file_proto_rpc_service_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_proto_rpc_service_proto_init() }
-func file_proto_rpc_service_proto_init() {
-	if File_proto_rpc_service_proto != nil {
+func init() { file_service_auth_proto_init() }
+func file_service_auth_proto_init() {
+	if File_service_auth_proto != nil {
 		return
 	}
 	file_rpc_message_proto_init()
@@ -56,16 +56,16 @@ func file_proto_rpc_service_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_rpc_service_proto_rawDesc), len(file_proto_rpc_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_service_auth_proto_rawDesc), len(file_service_auth_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   0,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_rpc_service_proto_goTypes,
-		DependencyIndexes: file_proto_rpc_service_proto_depIdxs,
+		GoTypes:           file_service_auth_proto_goTypes,
+		DependencyIndexes: file_service_auth_proto_depIdxs,
 	}.Build()
-	File_proto_rpc_service_proto = out.File
-	file_proto_rpc_service_proto_goTypes = nil
-	file_proto_rpc_service_proto_depIdxs = nil
+	File_service_auth_proto = out.File
+	file_service_auth_proto_goTypes = nil
+	file_service_auth_proto_depIdxs = nil
 }
