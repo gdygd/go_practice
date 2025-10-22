@@ -166,7 +166,8 @@ func NewGatewayServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate 
 	// 실제 gRPC 서버 localhost:50051)에 연결
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err = pb.RegisterAuthServiceHandlerFromEndpoint(
-		ctx, grpcMux, "localhost:50051", opts,
+		// ctx, grpcMux, "localhost:50051", opts,
+		ctx, grpcMux, server.config.GRPCServerAddress, opts,
 	)
 	if err != nil {
 		return nil, fmt.Errorf("cannot register grpc gateway handler: %w", err)
@@ -179,7 +180,8 @@ func NewGatewayServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate 
 	})
 
 	server.rServer = &http.Server{
-		Addr:         ":9091",
+		// Addr:         ":9091",
+		Addr:         server.config.GRPCGWServerAddress,
 		Handler:      router,
 		ReadTimeout:  R_TIME_OUT,
 		WriteTimeout: W_TIME_OUT,
@@ -189,9 +191,10 @@ func NewGatewayServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate 
 }
 
 func (server *Server) StartgPRC() error {
-	logger.Log.Print(2, "gRPC server start.")
+	logger.Log.Print(2, "gRPC server start.%s", server.config.GRPCServerAddress)
 
-	listener, err := net.Listen("tcp", ":50051")
+	// listener, err := net.Listen("tcp", ":50051")
+	listener, err := net.Listen("tcp", server.config.GRPCServerAddress)
 	if err != nil {
 		logger.Log.Error("cannot create listener:")
 	}
