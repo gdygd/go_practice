@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "grpc_svr_test/pb";
+
+import "rpc_message.proto";
+
+service HelloService{
+    rpc ConnMessage(stream Hello) returns (stream Hello);
+}

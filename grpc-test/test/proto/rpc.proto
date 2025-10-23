@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "grpc_test/pb";
+
+// message 정의
+message Hello {
+  string msg = 1;
+}
+
+// 양방향 스트리밍 서비스 정의
+service HelloService {
+  rpc Chat (stream Hello) returns (stream Hello);
+}

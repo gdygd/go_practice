@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "grpc_svr_test/pb";
+
+// message 정의
+message Hello {
+  string msg = 1;
+}
