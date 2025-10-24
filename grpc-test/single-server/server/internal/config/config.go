@@ -19,6 +19,7 @@ type Config struct {
 	RefreshTokenDuration time.Duration `mapstructure:"REFRESH_TOKEN_DURATION"`
 	HTTPServerAddress    string        `mapstructure:"HTTP_SERVER_ADDRESS"`
 	AllowOrigins         string        `mapstructure:"HTTP_ALLOW_ORIGINS"`
+	GRPCServerAddress    string        `mapstructure:"GRPC_SERVER_ADDRESS"`
 	TokenSecretKey       string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
 
 	PROCESS_INTERVAL time.Duration `mapstructure:"PROCESS_INTERVAL"`
@@ -41,5 +42,4 @@ func LoadConfig(path string) (Config, error) {
 
 	err = viper.Unmarshal(&config)
 	return config, nil
-
 }

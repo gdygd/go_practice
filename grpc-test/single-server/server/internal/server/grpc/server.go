@@ -10,22 +10,20 @@ import (
 	"sync"
 	"time"
 
-	"auth-service/internal/config"
-	"auth-service/internal/container"
-	"auth-service/internal/db"
-	"auth-service/internal/logger"
-	"auth-service/internal/memory"
-	"auth-service/internal/service"
+	"grpc_svr_test/internal/config"
+	"grpc_svr_test/internal/container"
+	"grpc_svr_test/internal/db"
+	"grpc_svr_test/internal/logger"
+	"grpc_svr_test/internal/memory"
+	"grpc_svr_test/internal/service"
 
-	apiserv "auth-service/internal/service/api"
-	pb "auth-service/pb"
+	apiserv "grpc_svr_test/internal/service/api"
+	pb "grpc_svr_test/pb"
 
 	"github.com/gdygd/goglib/token"
 	"github.com/gin-gonic/gin"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"google.golang.org/protobuf/encoding/protojson"
 )
 
 const (
@@ -35,7 +33,7 @@ const (
 
 type Server struct {
 	wg *sync.WaitGroup
-	pb.UnimplementedAuthServiceServer
+	pb.UnimplementedHelloServiceServer
 	gServer      *grpc.Server
 	rServer      *http.Server
 	router       *gin.Engine
@@ -70,7 +68,7 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 			GrpcServerLogger,
 		),
 	)
-	pb.RegisterAuthServiceServer(grpcServer, server)
+	pb.RegisterHelloServiceServer(grpcServer, server)
 	reflection.Register(grpcServer)
 
 	server.gServer = grpcServer
@@ -129,66 +127,66 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 // 	return server, nil
 // }
 
-func NewGatewayServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*Server, error) {
-	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
-	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
-	if err != nil {
-		return nil, fmt.Errorf("cannot create token maker:%w", err)
-	}
+// func NewGatewayServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*Server, error) {
+// 	apiservice := apiserv.NewApiService(ct.DbHnd, ct.ObjDb)
+// 	tokenMaker, err := token.NewJWTMaker(ct.Config.TokenSecretKey)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("cannot create token maker:%w", err)
+// 	}
 
-	server := &Server{
-		wg:           wg,
-		config:       ct.Config,
-		tokenMaker:   tokenMaker,
-		service:      apiservice,
-		dbHnd:        ct.DbHnd,
-		objdb:        ct.ObjDb,
-		ch_terminate: ch_terminate,
-	}
+// 	server := &Server{
+// 		wg:           wg,
+// 		config:       ct.Config,
+// 		tokenMaker:   tokenMaker,
+// 		service:      apiservice,
+// 		dbHnd:        ct.DbHnd,
+// 		objdb:        ct.ObjDb,
+// 		ch_terminate: ch_terminate,
+// 	}
 
-	router := gin.Default()
+// 	router := gin.Default()
 
-	// gRPC-Gateway Mux 생성
-	jsonOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
-		MarshalOptions: protojson.MarshalOptions{
-			UseProtoNames: true,
-		},
-		UnmarshalOptions: protojson.UnmarshalOptions{
-			DiscardUnknown: true,
-		},
-	})
+// 	// gRPC-Gateway Mux 생성
+// 	jsonOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+// 		MarshalOptions: protojson.MarshalOptions{
+// 			UseProtoNames: true,
+// 		},
+// 		UnmarshalOptions: protojson.UnmarshalOptions{
+// 			DiscardUnknown: true,
+// 		},
+// 	})
 
-	ctx := context.Background()
-	// ctx, cancel := context.WithCancel(ctx)
+// 	ctx := context.Background()
+// 	// ctx, cancel := context.WithCancel(ctx)
 
-	grpcMux := runtime.NewServeMux(jsonOption)
+// 	grpcMux := runtime.NewServeMux(jsonOption)
 
-	// 실제 gRPC 서버 localhost:50051)에 연결
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err = pb.RegisterAuthServiceHandlerFromEndpoint(
-		// ctx, grpcMux, "localhost:50051", opts,
-		ctx, grpcMux, server.config.GRPCServerAddress, opts,
-	)
-	if err != nil {
-		return nil, fmt.Errorf("cannot register grpc gateway handler: %w", err)
-	}
+// 	// 실제 gRPC 서버 localhost:50051)에 연결
+// 	opts := []grpc.DialOption{grpc.WithInsecure()}
+// 	err = pb.RegisterAuthServiceHandlerFromEndpoint(
+// 		// ctx, grpcMux, "localhost:50051", opts,
+// 		ctx, grpcMux, server.config.GRPCServerAddress, opts,
+// 	)
+// 	if err != nil {
+// 		return nil, fmt.Errorf("cannot register grpc gateway handler: %w", err)
+// 	}
 
-	router.Any("/v1/*any", gin.WrapH(grpcMux))
+// 	router.Any("/v1/*any", gin.WrapH(grpcMux))
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "pong"})
-	})
+// 	router.GET("/ping", func(c *gin.Context) {
+// 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
+// 	})
 
-	server.rServer = &http.Server{
-		// Addr:         ":9091",
-		Addr:         server.config.GRPCGWServerAddress,
-		Handler:      router,
-		ReadTimeout:  R_TIME_OUT,
-		WriteTimeout: W_TIME_OUT,
-	}
+// 	server.rServer = &http.Server{
+// 		// Addr:         ":9091",
+// 		Addr:         server.config.GRPCGWServerAddress,
+// 		Handler:      router,
+// 		ReadTimeout:  R_TIME_OUT,
+// 		WriteTimeout: W_TIME_OUT,
+// 	}
 
-	return server, nil
-}
+// 	return server, nil
+// }
 
 func (server *Server) StartgPRC() error {
 	logger.Log.Print(2, "gRPC server start.%s", server.config.GRPCServerAddress)

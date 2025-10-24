@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"grpc_client_test/internal/logger"
+	"grpc_client_test/pb"
 
 	"google.golang.org/grpc/connectivity"
 )
@@ -115,12 +116,19 @@ func (c *GrpcClient) txRoutine(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			logger.Log.Print(2, "quit tx routine...")
+			return
 		default:
+			// logger.Log.Print(2, "txRoutine...")
 			if c.conn.GetState() != connectivity.Ready {
 				continue
 			}
 
 			// send.
+			err := c.stream.Send(&pb.Hello{Msg: "to Client..."})
+			if err != nil {
+				log.Printf("Send error: %v", err)
+				return
+			}
 
 			time.Sleep(time.Second * 1)
 		}
@@ -132,21 +140,26 @@ func (c *GrpcClient) rxRoutine(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			logger.Log.Print(2, "quit rx routine...")
+			return
 		default:
 			if c.conn.GetState() != connectivity.Ready {
 				continue
 			}
 
+			// logger.Log.Print(2, "rxRoutine...")
+
 			// recv
 			resp, err := c.stream.Recv()
 			if err == io.EOF {
 				log.Println("Server closed stream")
+				return
 			}
 			if err != nil {
 				log.Fatalf("Recv error: %v", err)
+				return
 			}
 			if err == nil {
-				log.Printf("📨 From server: %s", resp.Msg)
+				log.Printf("From server: %s", resp.Msg)
 			}
 		}
 	}

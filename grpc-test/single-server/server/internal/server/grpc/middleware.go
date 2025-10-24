@@ -1,11 +1,12 @@
 package gapi
 
 import (
-	"auth-service/internal/logger"
 	"context"
 	"fmt"
 	"net/http"
 	"time"
+
+	"grpc_svr_test/internal/logger"
 
 	"github.com/gdygd/goglib/token"
 	"github.com/gin-contrib/cors"

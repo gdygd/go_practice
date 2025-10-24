@@ -3,6 +3,7 @@ package app
 import (
 	"sync"
 
+	gapi "grpc_client_test/internal/client/grpc"
 	"grpc_client_test/internal/container"
 	"grpc_client_test/internal/logger"
 	"grpc_client_test/internal/server/api"
@@ -11,6 +12,7 @@ import (
 type Application struct {
 	wg        *sync.WaitGroup
 	ApiServer *api.Server
+	Gclient   *gapi.GrpcClient
 }
 
 func NewApplication(ct *container.Container, ch_terminate chan bool) *Application {
@@ -24,9 +26,16 @@ func NewApplication(ct *container.Container, ch_terminate chan bool) *Applicatio
 		return nil
 	}
 
+	gclient, _ := gapi.NewClient(wg, ct, ch_terminate)
+	// if err != nil {
+	// 	logger.Log.Error("Api server initialization fail.. %v", err)
+	// 	return nil
+	// }
+
 	return &Application{
 		wg:        wg,
 		ApiServer: apisvr,
+		Gclient:   gclient,
 	}
 }
 
@@ -34,10 +43,18 @@ func (app Application) Start() {
 	app.wg.Add(1)
 	logger.Log.Print(3, "Start API server.. #1")
 	go app.ApiServer.Start()
+
+	app.wg.Add(1)
+	logger.Log.Print(3, "Start gRPC client.. #1")
+	go app.Gclient.Start()
 }
 
 func (app Application) Shutdown() {
 	logger.Log.Print(3, "Shutdown Rest server#1")
 	app.ApiServer.Shutdown()
 	logger.Log.Print(3, "Shutdown Rest server#2")
+
+	logger.Log.Print(3, "Shutdown grpc client#1")
+	app.Gclient.Shutdown()
+	logger.Log.Print(3, "Shutdown grpc client#2")
 }

@@ -33,12 +33,12 @@ func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 
 	err := gclient.Connect()
 	if err != nil {
-		return nil, err
+		return gclient, err
 	}
 
 	err = gclient.CreateStream()
 	if err != nil {
-		return nil, err
+		return gclient, err
 	}
 
 	return gclient, nil
@@ -49,7 +49,7 @@ func (c *GrpcClient) Connect() error {
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
 
-	conn, err := grpc.NewClient("localhost:50051", opts...)
+	conn, err := grpc.NewClient("localhost:9190", opts...)
 	if err != nil {
 		logger.Log.Error("Failed to connect: %v", err)
 		return err
@@ -141,4 +141,15 @@ WAIT:
 	}
 
 	logger.Log.Print(2, "gRPC Client quit..")
+}
+
+func (c *GrpcClient) Shutdown() {
+	logger.Log.Print(2, "Shutdown grpc client..")
+
+	c.cancel() // 종료  시그널
+	c.txrxwg.Wait()
+
+	logger.Log.Print(2, "Tx/Rx routine finished.")
+	// <-c.ctx.Done()
+	logger.Log.Print(2, "gRPC client Shutdown finished.")
 }
