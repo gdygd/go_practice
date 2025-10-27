@@ -84,18 +84,22 @@ func (c *GrpcClient) startRxRoutine(ctx context.Context, mu *sync.Mutex, running
 
 func (c *GrpcClient) manageConnect(ctx context.Context) {
 	for {
+		logger.Log.Print(2, "manageconnect...#0")
 		select {
 		case <-ctx.Done():
 			logger.Log.Print(2, "[ManageConn] routine exiting..")
 			return
 		default:
-			if c.conn.GetState() != connectivity.Shutdown {
-				time.Sleep(time.Second * 1)
-				continue
+			logger.Log.Print(2, "manageconnect...#1 %v", c.conn.GetState())
+			// if c.conn.GetState() != connectivity.Shutdown && c.conn.GetState() != connectivity.TransientFailure {
+			// 	time.Sleep(time.Second * 1)
+			// 	continue
 
-			}
+			// }
 
-			if c.conn.GetState() == connectivity.Shutdown {
+			if c.conn.GetState() == connectivity.Shutdown || c.conn.GetState() == connectivity.TransientFailure || c.conn.GetState() == connectivity.Idle {
+				logger.Log.Print(2, "manageconnect...#2")
+
 				err1 := c.Connect()
 				err2 := c.CreateStream()
 
@@ -116,15 +120,36 @@ func (c *GrpcClient) txRoutine(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			logger.Log.Print(2, "quit tx routine...")
+			if c.stream == nil {
+				logger.Log.Print(2, "#1 tx, stream is nil..")
+				return
+			}
+
+			// 남은 메세지 처리
+
+			// 종료
+			c.mu.Lock()
+			c.stream.CloseSend()
+			c.mu.Unlock()
+
 			return
 		default:
-			// logger.Log.Print(2, "txRoutine...")
+			logger.Log.Print(2, "txRoutine... %v", c.conn.GetState())
 			if c.conn.GetState() != connectivity.Ready {
+				time.Sleep(time.Second * 1)
+				continue
+			}
+
+			if c.stream == nil {
+				logger.Log.Print(2, "#2 tx, stream is nil..")
 				continue
 			}
 
 			// send.
+			c.mu.Lock()
 			err := c.stream.Send(&pb.Hello{Msg: "to Client..."})
+			c.mu.Unlock()
+
 			if err != nil {
 				log.Printf("Send error: %v", err)
 				return
@@ -146,16 +171,30 @@ func (c *GrpcClient) rxRoutine(ctx context.Context) {
 				continue
 			}
 
-			// logger.Log.Print(2, "rxRoutine...")
+			c.mu.Lock()
+			logger.Log.Print(2, "rxRoutine... %v", c.conn.GetState())
+			c.mu.Unlock()
+
+			if c.conn.GetState() != connectivity.Ready {
+				time.Sleep(time.Millisecond * 10)
+				continue
+			}
+			if c.stream == nil {
+				logger.Log.Print(1, "rx, stream is nil..")
+				continue
+			}
 
 			// recv
+			c.mu.Lock()
 			resp, err := c.stream.Recv()
+			c.mu.Unlock()
+
 			if err == io.EOF {
-				log.Println("Server closed stream")
+				logger.Log.Error("Server closed stream")
 				return
 			}
 			if err != nil {
-				log.Fatalf("Recv error: %v", err)
+				logger.Log.Error("Recv error: %v", err)
 				return
 			}
 			if err == nil {

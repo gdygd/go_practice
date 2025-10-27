@@ -2,6 +2,7 @@ package gapi
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -21,6 +22,7 @@ type GrpcClient struct {
 	stream pb.HelloService_ConnMessageClient
 	ctx    context.Context // master context
 	cancel context.CancelFunc
+	mu     *sync.Mutex
 }
 
 func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*GrpcClient, error) {
@@ -29,6 +31,7 @@ func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 		wg:     wg,
 		ctx:    ctx,
 		cancel: cancel,
+		mu:     &sync.Mutex{},
 	}
 
 	err := gclient.Connect()
@@ -45,22 +48,32 @@ func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 }
 
 func (c *GrpcClient) Connect() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
 
 	conn, err := grpc.NewClient("localhost:9190", opts...)
+	c.conn = conn
 	if err != nil {
 		logger.Log.Error("Failed to connect: %v", err)
 		return err
 	}
 
-	c.conn = conn
-
 	return nil
 }
 
 func (c *GrpcClient) CreateStream() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	c.stream = nil
+
+	if c.conn == nil {
+		return fmt.Errorf("conn is nil..")
+	}
 	client := pb.NewHelloServiceClient(c.conn)
 	stream, err := client.ConnMessage(context.Background())
 	if err != nil {
@@ -145,6 +158,8 @@ WAIT:
 
 func (c *GrpcClient) Shutdown() {
 	logger.Log.Print(2, "Shutdown grpc client..")
+
+	// c.conn.Close()
 
 	c.cancel() // 종료  시그널
 	c.txrxwg.Wait()
