@@ -11,6 +11,7 @@ import (
 	"grpc_client_test/internal/logger"
 	"grpc_client_test/pb"
 
+	"github.com/gdygd/goglib/databus"
 	"google.golang.org/grpc/connectivity"
 )
 
@@ -195,6 +196,12 @@ func (c *GrpcClient) rxRoutine(ctx context.Context) {
 			// }
 			if err == nil {
 				log.Printf("From server: %s", resp.Msg)
+				msg := databus.Message{
+					Topic: "test_msg",
+					Data:  resp.Msg,
+				}
+				c.ct.Bus.Publish(msg)
+
 			}
 		}
 	}

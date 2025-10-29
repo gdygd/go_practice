@@ -7,12 +7,15 @@ import (
 	"grpc_client_test/internal/db"
 	"grpc_client_test/internal/db/mdb"
 	"grpc_client_test/internal/memory"
+
+	"github.com/gdygd/goglib/databus"
 )
 
 type Container struct {
 	Config *config.Config
 	DbHnd  db.DbHandler
 	ObjDb  *memory.RedisDb
+	Bus    *databus.DataBus
 }
 
 var container *Container
@@ -33,6 +36,9 @@ func NewContainer() (*Container, error) {
 	// init object db
 	obj := memory.InitRedisDb(config.RedisAddr)
 	container.ObjDb = obj
+
+	// init databus
+	container.Bus = databus.NewDataBus()
 
 	return container, nil
 }

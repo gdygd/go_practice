@@ -23,6 +23,8 @@ type GrpcClient struct {
 	ctx    context.Context // master context
 	cancel context.CancelFunc
 	mu     sync.RWMutex
+
+	ct *container.Container
 }
 
 func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*GrpcClient, error) {
@@ -31,6 +33,7 @@ func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 		wg:     wg,
 		ctx:    ctx,
 		cancel: cancel,
+		ct:     ct,
 	}
 
 	err := gclient.Connect()
