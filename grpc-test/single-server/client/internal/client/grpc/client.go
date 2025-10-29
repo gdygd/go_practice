@@ -22,7 +22,7 @@ type GrpcClient struct {
 	stream pb.HelloService_ConnMessageClient
 	ctx    context.Context // master context
 	cancel context.CancelFunc
-	mu     *sync.Mutex
+	mu     sync.RWMutex
 }
 
 func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*GrpcClient, error) {
@@ -31,7 +31,6 @@ func NewClient(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 		wg:     wg,
 		ctx:    ctx,
 		cancel: cancel,
-		mu:     &sync.Mutex{},
 	}
 
 	err := gclient.Connect()
@@ -51,6 +50,8 @@ func (c *GrpcClient) Connect() error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
+	logger.Log.Print(2, "Connect...#1")
+
 	opts := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
@@ -62,12 +63,16 @@ func (c *GrpcClient) Connect() error {
 		return err
 	}
 
+	logger.Log.Print(2, "Connect...#2")
+
 	return nil
 }
 
 func (c *GrpcClient) CreateStream() error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
+
+	logger.Log.Print(2, "CreateStream...#1")
 
 	c.stream = nil
 

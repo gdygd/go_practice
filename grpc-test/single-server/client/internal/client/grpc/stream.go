@@ -2,6 +2,7 @@ package gapi
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 	"sync"
@@ -90,14 +91,9 @@ func (c *GrpcClient) manageConnect(ctx context.Context) {
 			logger.Log.Print(2, "[ManageConn] routine exiting..")
 			return
 		default:
-			logger.Log.Print(2, "manageconnect...#1 %v", c.conn.GetState())
-			// if c.conn.GetState() != connectivity.Shutdown && c.conn.GetState() != connectivity.TransientFailure {
-			// 	time.Sleep(time.Second * 1)
-			// 	continue
+			logger.Log.Print(2, "manageconnect...#1 %v", c.getState())
 
-			// }
-
-			if c.conn.GetState() == connectivity.Shutdown || c.conn.GetState() == connectivity.TransientFailure || c.conn.GetState() == connectivity.Idle {
+			if c.getState() == connectivity.Shutdown || c.getState() == connectivity.TransientFailure || c.getState() == connectivity.Idle {
 				logger.Log.Print(2, "manageconnect...#2")
 
 				err1 := c.Connect()
@@ -128,14 +124,12 @@ func (c *GrpcClient) txRoutine(ctx context.Context) {
 			// 남은 메세지 처리
 
 			// 종료
-			c.mu.Lock()
-			c.stream.CloseSend()
-			c.mu.Unlock()
-
+			c.closeSend()
 			return
+
 		default:
-			logger.Log.Print(2, "txRoutine... %v", c.conn.GetState())
-			if c.conn.GetState() != connectivity.Ready {
+			logger.Log.Print(2, "txRoutine... %v", c.getState())
+			if c.getState() != connectivity.Ready {
 				time.Sleep(time.Second * 1)
 				continue
 			}
@@ -146,10 +140,10 @@ func (c *GrpcClient) txRoutine(ctx context.Context) {
 			}
 
 			// send.
-			c.mu.Lock()
-			err := c.stream.Send(&pb.Hello{Msg: "to Client..."})
-			c.mu.Unlock()
-
+			// c.mu.Lock()
+			// err := c.stream.Send(&pb.Hello{Msg: "to Client..."})
+			// c.mu.Unlock()
+			err := c.send(&pb.Hello{Msg: "to Client..."})
 			if err != nil {
 				log.Printf("Send error: %v", err)
 				return
@@ -167,15 +161,15 @@ func (c *GrpcClient) rxRoutine(ctx context.Context) {
 			logger.Log.Print(2, "quit rx routine...")
 			return
 		default:
-			if c.conn.GetState() != connectivity.Ready {
+			if c.getState() != connectivity.Ready {
 				continue
 			}
 
-			c.mu.Lock()
-			logger.Log.Print(2, "rxRoutine... %v", c.conn.GetState())
-			c.mu.Unlock()
+			// c.mu.Lock()
+			logger.Log.Print(2, "rxRoutine... %v", c.getState())
+			// c.mu.Unlock()
 
-			if c.conn.GetState() != connectivity.Ready {
+			if c.getState() != connectivity.Ready {
 				time.Sleep(time.Millisecond * 10)
 				continue
 			}
@@ -185,21 +179,78 @@ func (c *GrpcClient) rxRoutine(ctx context.Context) {
 			}
 
 			// recv
-			c.mu.Lock()
-			resp, err := c.stream.Recv()
-			c.mu.Unlock()
+			resp, err := c.recv()
 
-			if err == io.EOF {
-				logger.Log.Error("Server closed stream")
-				return
-			}
-			if err != nil {
-				logger.Log.Error("Recv error: %v", err)
-				return
-			}
+			// c.mu.Lock()
+			// resp, err := c.stream.Recv()
+			// c.mu.Unlock()
+
+			// if err == io.EOF {
+			// 	logger.Log.Error("Server closed stream")
+			// 	return
+			// }
+			// if err != nil {
+			// 	logger.Log.Error("Recv error: %v", err)
+			// 	return
+			// }
 			if err == nil {
 				log.Printf("From server: %s", resp.Msg)
 			}
 		}
 	}
+}
+
+func (c *GrpcClient) send(data interface{}) error {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+
+	err := c.stream.Send(&pb.Hello{Msg: "to Client..."})
+	if err != nil {
+		logger.Log.Error("grpc Send err.. %v", err)
+	}
+
+	return err
+}
+
+func (c *GrpcClient) recv() (*pb.Hello, error) {
+	c.mu.RLock()
+	logger.Log.Print(2, "recv #1")
+	defer func() {
+		logger.Log.Print(2, "recv #2")
+		c.mu.RUnlock()
+	}()
+	// defer c.mu.RUnlock()
+	resp, err := c.stream.Recv()
+
+	if resp == nil {
+		return nil, fmt.Errorf("resp is nil...")
+	}
+
+	if err == io.EOF {
+		logger.Log.Error("Server closed stream")
+		return resp, nil
+	}
+	if err != nil {
+		logger.Log.Error("Recv error: %v", err)
+		return resp, nil
+	}
+
+	return resp, nil
+}
+
+func (c *GrpcClient) closeSend() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	err := c.stream.CloseSend()
+	if err != nil {
+		logger.Log.Error("closeSend err.. %v", err)
+	}
+	return err
+}
+
+func (c *GrpcClient) getState() connectivity.State {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	return c.conn.GetState()
 }
