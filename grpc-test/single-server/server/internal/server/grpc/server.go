@@ -31,6 +31,11 @@ const (
 	W_TIME_OUT = 5 * time.Second
 )
 
+type Job_ConnMessage struct {
+	Req      *pb.Hello
+	RespChan chan *pb.Hello
+}
+
 type Server struct {
 	wg *sync.WaitGroup
 	pb.UnimplementedHelloServiceServer
@@ -43,6 +48,12 @@ type Server struct {
 	dbHnd        db.DbHandler
 	objdb        *memory.RedisDb
 	ch_terminate chan bool
+
+	work_wg     *sync.WaitGroup
+	work_ctx    context.Context
+	work_cancel context.CancelFunc
+
+	jobCh chan Job_ConnMessage
 }
 
 func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bool) (*Server, error) {
@@ -52,6 +63,7 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 		return nil, fmt.Errorf("cannot create token maker:%w", err)
 	}
 
+	workctx, workcancel := context.WithCancel(context.Background())
 	server := &Server{
 		wg:           wg,
 		config:       ct.Config,
@@ -60,6 +72,11 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 		dbHnd:        ct.DbHnd,
 		objdb:        ct.ObjDb,
 		ch_terminate: ch_terminate,
+
+		work_wg:     &sync.WaitGroup{},
+		work_ctx:    workctx,
+		work_cancel: workcancel,
+		jobCh:       make(chan Job_ConnMessage, 100),
 	}
 
 	// grpcLogger := grpc.UnaryInterceptor(GrpcServerLogger)
@@ -189,6 +206,14 @@ func NewServer(wg *sync.WaitGroup, ct *container.Container, ch_terminate chan bo
 // }
 
 func (server *Server) StartgPRC() error {
+	// worker 실행
+	go func() {
+		for i := 0; i < 10; i++ {
+			server.work_wg.Add(1)
+			go server.worker(i)
+		}
+	}()
+
 	logger.Log.Print(2, "gRPC server start.%s", server.config.GRPCServerAddress)
 
 	// listener, err := net.Listen("tcp", ":50051")
@@ -205,7 +230,32 @@ func (server *Server) StartgPRC() error {
 		logger.Log.Error("gRPC server faield to serve, err:%v", err)
 		return err
 	}
+
 	return nil
+}
+
+func (server *Server) ShutdowngRPCWorker(ctx context.Context) {
+	logger.Log.Print(2, "ShutdowngRPCWorker..")
+
+	// worker 종료
+	// 작업 수신 중단
+	close(server.jobCh)
+
+	// send 종료 신호 to worker
+	server.work_cancel()
+
+	done := make(chan struct{})
+	go func() {
+		server.work_wg.Wait()
+		close(done)
+	}()
+
+	select {
+	case <-done:
+		logger.Log.Print(2, "All worker stopped gracefully")
+	case <-ctx.Done():
+		logger.Log.Print(2, "Shutdown timeout: %v", ctx.Err())
+	}
 }
 
 func (server *Server) ShutdowngRPC() error {
@@ -216,6 +266,12 @@ func (server *Server) ShutdowngRPC() error {
 		close(done)
 	}()
 
+	// quti worker...
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	server.ShutdowngRPCWorker(ctx)
+
+	// quti grpc
 	select {
 	case <-done:
 		logger.Log.Print(2, "gPRC server stopped gracefully")

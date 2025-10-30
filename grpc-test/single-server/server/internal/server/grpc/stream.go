@@ -5,12 +5,15 @@ import (
 	"io"
 	"log"
 
+	"grpc_svr_test/internal/logger"
 	"grpc_svr_test/pb"
 )
 
 func (s *Server) ConnMessage(stream pb.HelloService_ConnMessageServer) error {
 	// 채널 생성
 	clientMsgs := make(chan *pb.Hello)
+
+	respChan := make(chan *pb.Hello, 100)
 
 	// recv
 	go func() {
@@ -27,6 +30,9 @@ func (s *Server) ConnMessage(stream pb.HelloService_ConnMessageServer) error {
 			}
 			log.Printf("From client: %s", req.Msg)
 			clientMsgs <- req
+
+			s.pushJob(req, respChan)
+
 		}
 	}()
 
@@ -51,9 +57,48 @@ func (s *Server) ConnMessage(stream pb.HelloService_ConnMessageServer) error {
 				log.Printf("send error: %v", err)
 				return err
 			}
+
+		case resp := <-respChan:
+			logger.Log.Print(2, "respchan .. %v", resp)
+
 		case <-stream.Context().Done():
 			log.Println("client disconnected")
 			return nil
+		}
+	}
+}
+
+func (s *Server) pushJob(req *pb.Hello, res chan *pb.Hello) {
+	logger.Log.Print(2, "pushJob")
+	job := Job_ConnMessage{
+		req, res,
+	}
+	s.jobCh <- job
+}
+
+// shutdown에서 worker종료
+// job 확인 후
+func (s *Server) worker(id int) {
+	logger.Log.Print(2, "Worker %d start", id)
+	defer func() {
+		s.work_wg.Done()
+		logger.Log.Print(2, "Ended worker %d", id)
+	}()
+	logger.Log.Print(2, "start work (%d)", id)
+
+	for {
+		select {
+		case job, ok := <-s.jobCh:
+			if !ok {
+				logger.Log.Print(2, "worker %d: job closed..", id)
+				return
+			}
+
+			logger.Log.Print(2, "woker : (%d) job : %v", job.Req)
+			job.RespChan <- &pb.Hello{Msg: "from worker, Hello Server"}
+		case <-s.work_ctx.Done():
+			logger.Log.Print(2, "worker (%d) is stopping..", id)
+			return
 		}
 	}
 }
