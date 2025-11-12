@@ -1,0 +1,21 @@
+# 컨테이너 실행
+docker-compose up -d
+
+# 로그 확인
+docker-compose logs -f
+
+# 중지 및 삭제
+docker-compose down
+
+
+#관리 콘솔: http://localhost:15672
+(ID: guest, PW: guest)
+
+공부 순서
+메시지 브로커의 개념 (MQ, Pub/Sub)
+
+RabbitMQ 내부 구조 (Exchange ↔ Queue ↔ Binding)
+
+메시지 전달 플로우 (Publish → Route → Consume)
+
+메시지 영속성(durable, persistent) 개념

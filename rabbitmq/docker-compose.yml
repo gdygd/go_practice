@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.2.0-management
+    container_name: rabbitmq
+    hostname: rabbit
+    ports:
+      - "5672:5672"     # AMQP (Go 애플리케이션 연결용)
+      - "15672:15672"   # Management UI (웹 콘솔)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq   # 데이터 영속화
+    restart: unless-stopped
+
+volumes:
+  rabbitmq_data:
