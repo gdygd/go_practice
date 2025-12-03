@@ -43,6 +43,7 @@ func (m *RabbitMQClient) manageConnect(ctx context.Context) {
 			logger.Log.Print(2, "conn close.")
 			m.close()
 			m.Connect()
+			time.Sleep(time.Second * 1)
 		case <-ctx.Done():
 			logger.Log.Print(2, "quit routine [manageconnect]..")
 			m.close() // channel & conn close
@@ -90,7 +91,13 @@ func (m *RabbitMQClient) subRoutine(ctx context.Context) {
 			m.close() // channel & conn close
 			return
 		case d := <-msgs:
+			if !m.isConnected() {
+				logger.Log.Print(2, "RabbitMQ not connected...[SUB]")
+				time.Sleep(time.Second * 1)
+				continue
+			}
 			logger.Log.Print(2, "subscribe message [%s][%s]", d.RoutingKey, d.Body)
+			time.Sleep(time.Second * 1)
 
 		default:
 			logger.Log.Print(2, "subscribe...")
