@@ -99,6 +99,7 @@ func (server *Server) Start() error {
 	logger.Log.Print(2, "Gin server start..")
 
 	go server.hub.Run()
+	// go server.testWSbroadcast()
 
 	if err := server.srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		logger.Log.Error("listen error. %v", err)
@@ -106,6 +107,13 @@ func (server *Server) Start() error {
 	}
 
 	return nil
+}
+
+func (server *Server) testWSbroadcast() {
+	for {
+		server.hub.Broadcast([]byte("broad cast test~~"))
+		time.Sleep(time.Millisecond * 10)
+	}
 }
 
 func (server *Server) Shutdown() error {

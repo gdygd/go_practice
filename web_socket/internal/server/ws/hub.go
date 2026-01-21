@@ -27,6 +27,7 @@ func NewHub(ctx context.Context) *Hub {
 }
 
 func (h *Hub) Broadcast(msg []byte) {
+	h.broadcast <- msg
 }
 
 func (h *Hub) Run() {
