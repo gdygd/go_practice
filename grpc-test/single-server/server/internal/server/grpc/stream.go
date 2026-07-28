@@ -44,14 +44,13 @@ func (s *Server) ConnMessage(stream pb.HelloService_ConnMessageServer) error {
 				log.Println("client message channel closed")
 				return nil
 			}
-			// 클라이언트가 보낸 메시지에 응답
+
 			resp := &pb.Hello{Msg: fmt.Sprintf("Hello Client, you said: %s", msg.Msg)}
 			if err := stream.Send(resp); err != nil {
 				log.Printf("send error: %v", err)
 				return err
 			}
 
-			// 서버가 클라이언트에 별도 메시지 push (역방향)
 			serverPush := &pb.Hello{Msg: "Hello Server"}
 			if err := stream.Send(serverPush); err != nil {
 				log.Printf("send error: %v", err)

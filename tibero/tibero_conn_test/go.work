@@ -1,0 +1,9 @@
+go 1.21.5
+
+use (
+	.
+	./app
+	./app/appmodel
+	./app/dbapp
+	./app/dbapp/sqldb
+)

@@ -1,0 +1,313 @@
+package main
+
+import (
+	"context"
+	"database/sql"
+	"fmt"
+	"log"
+	"time"
+
+	_ "github.com/alexbrainman/odbc"
+	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/godror/godror"
+)
+
+const (
+	TIBERO  = "tibero"
+	ORACLE  = "oracle"
+	MARIADB = "mariadb"
+)
+
+// ------------------------------------------------------------------------------
+// Struct
+// ------------------------------------------------------------------------------
+type DBHandler struct {
+	driverNm  string
+	user      string
+	pw        string
+	dbNm      string
+	host      string
+	port      int
+	connType  string
+	dsn       string
+	Connected bool
+}
+
+func (m *DBHandler) Open(dbConnType string) (*sql.DB, error) {
+	var strDsn string
+
+	switch dbConnType {
+	case TIBERO:
+		// tibero (문자열)
+		strDsn = fmt.Sprintf(`Driver={%s};Server=%s;Port=%d;Database=%s;UID=%s;PWD=%s;`, m.driverNm, m.host, m.port, m.dbNm, m.user, m.pw)
+
+	case MARIADB:
+		// mariaDB
+		strDsn = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", m.user, m.pw, m.host, m.port, m.dbNm)
+
+	case ORACLE:
+		// oracle
+		strDsn = fmt.Sprintf("user=\"%s\" password=\"%s\" connectString=\"%s:%d/%s\"", m.user, m.pw, m.host, m.port, m.dbNm)
+	}
+
+	log.Printf(`dbConnType ::: %s`, dbConnType)
+	log.Printf(`connType ::: %s`, m.connType)
+	log.Printf(`strDsn ::: %s`, strDsn)
+
+	// 미리 설정된 DSN 사용
+	// strDsn = "DSN=" + m.dsn
+	db, err := sql.Open(m.connType, strDsn)
+
+	if err != nil {
+		m.Connected = false
+		return nil, err
+	}
+
+	// 1) PingContext()
+	// var ctx context.Context
+	// ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	// defer cancel()
+
+	// if err = db.PingContext(ctx); err != nil {
+	// 	log.Printf("database open ping context err : %v", err)
+	// 	return nil, err
+	// }
+
+	// 2) 간단한 쿼리문
+	// log.Printf("[Ping qeury...]")
+	// var val int = 0
+	// _, err = db.Query(`select 1 VAL from dual`)
+	// if err != nil {
+	// 	log.Printf("[Ping qeury...] err %v", err)
+	// 	return db, err
+	// }
+
+	// log.Printf("[Ping qeury...](%d)", val)
+
+	// 3) 예전에 찾아놓은 방법
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
+
+	done := make(chan error, 1)
+	go func() {
+		log.Println("접속 시도중...")
+		err := db.PingContext(ctx)
+		done <- err
+	}()
+
+	select {
+	case <-ctx.Done():
+		log.Printf("Connection timeout: %v", ctx.Err())
+		return nil, ctx.Err()
+
+	case err := <-done:
+		if err != nil {
+			log.Printf("Connection Error : %v", err)
+			return nil, ctx.Err()
+		}
+	}
+
+	m.Connected = true
+	return db, nil
+}
+
+func (m *DBHandler) Close(db *sql.DB) error {
+	if err := db.Close(); err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
+func (m *DBHandler) slowQuery(db *sql.DB, ctx context.Context) error {
+	// deadline := time.Now().Add(2 * time.Second)
+	// ctx, cancel := context.WithDeadline(pctx, deadline)
+
+	start := time.Now()
+
+	// query := "SELECT TB_SLEEP(5) FROM DUAL"
+	// query := "select loc_id from LOC_COLL_STATE_LOG_TEMP"
+	// query := "select 1 from dual"
+
+	query := `insert into date_test values(1, now())`
+
+	// query := `update date_test set id = 4 where id = 1`
+
+	// query := `delete from date_test where id = 4`
+
+	// rows, err := db.QueryContext(ctx, query)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer rows.Close()
+
+	// for rows.Next() {
+	// 	var locId int
+
+	// 	if err := rows.Scan(&locId); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// }
+
+	// _, err := db.Exec("SELECT TB_SLEEP(5) FROM DUAL")
+	// _, err := db.ExecContext(ctx, query)
+
+	_, err := db.ExecContext(ctx, query)
+	if err != nil {
+		log.Fatalf("쿼리문 실행 에러 %v", err)
+	}
+
+	elapsed := time.Since(start)
+	log.Println("[경과한 시간] : ", elapsed)
+
+	return nil
+}
+
+func (m *DBHandler) slowQueryTx(tx *sql.Tx, ctx context.Context) error {
+
+	start := time.Now()
+
+	query := `insert into date_test values(1, now())`
+
+	_, err := tx.ExecContext(ctx, query)
+	if err != nil {
+		if ctx.Err() == context.Canceled {
+			log.Println("context Canceled")
+		} else {
+			log.Fatal(err)
+		}
+
+		return err
+	}
+
+	elapsed := time.Since(start)
+	log.Println("[경과한 시간] : ", elapsed)
+
+	return nil
+}
+
+func cancelF(cancel context.CancelFunc) {
+	cancel()
+}
+
+func main() {
+	// dbConnType := TIBERO
+	// dbConnType := MARIADB
+	dbConnType := ORACLE
+
+	// tibero
+	tdb := &DBHandler{
+		driverNm: "Tibero 7 ODBC driver",
+		user:     "MOON",
+		pw:       "MOON",
+		dbNm:     "tibero",
+		host:     "10.1.44.121", // invalid ip address
+		// host:     "10.1.0.120", // valid ip address
+		port:     8629,
+		connType: "odbc",
+		dsn:      "tbodbc",
+	}
+
+	// mariadb
+	mdb := &DBHandler{
+		user: "dev",
+		pw:   "dev",
+		dbNm: "dbhandle_test",
+		host: "10.1.44.121", // invalid ip address
+		// host:     "10.1.0.115", // valid ip address
+		port:     3306,
+		connType: "mysql",
+	}
+
+	// oracle
+	odb := &DBHandler{
+		user: "UWSIG_TEST",
+		pw:   "UWSIG_TEST",
+		dbNm: "theroadora11",
+		host: "10.1.44.121", // invalid ip address
+		// host:     "192.168.2.161", // valid ip address
+		port:     1521,
+		connType: "godror",
+	}
+
+	var db *sql.DB = nil
+	var err error = nil
+
+	switch dbConnType {
+	case TIBERO:
+		db, err = tdb.Open(dbConnType)
+		if err != nil || db == nil {
+			log.Fatalf("Open() 실패 :: %v", err)
+		}
+		defer tdb.Close(db)
+
+	case MARIADB:
+		db, err = mdb.Open(dbConnType)
+		if err != nil || db == nil {
+			log.Fatalf("Open() 실패 :: %v", err)
+		}
+		defer mdb.Close(db)
+
+	case ORACLE:
+		db, err = odb.Open(dbConnType)
+		if err != nil || db == nil {
+			log.Fatalf("Open() 실패 :: %v", err)
+		}
+		defer odb.Close(db)
+	}
+
+	// err = db.Ping()
+	// if err != nil {
+	// 	log.Fatalf("Ping() 실패 :: %v", err)
+	// }
+	// log.Println("Ping() 성공 !!!!!!!!")
+
+	log.Println("[Success] :: DB 최종 접속 성공")
+
+	// tdb.slowQuery(db)
+
+	// pctx := context.Background()
+
+	// ctx, cancel := context.WithCancel(pctx)
+	// defer cancel()
+
+	// go func() {
+	// 	// 시간 설정
+	// 	time.Sleep(1 * time.Nanosecond)
+	// 	// time.Sleep(100 * time.Microsecond)
+	// 	log.Println("cancel()")
+	// 	// cancel()
+
+	// 	cancelF(cancel)
+	// }()
+
+	// err = tdb.slowQuery(db, ctx)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// tx, err := db.BeginTx(ctx, nil)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// defer tx.Rollback()
+
+	// errTx := tdb.slowQueryTx(tx, ctx)
+	// if errTx != nil {
+	// 	tx.Rollback()
+	// 	log.Fatal(err)
+	// } else {
+	// 	if err := tx.Commit(); err != nil {
+	// 		tx.Rollback()
+	// 		log.Fatal(err)
+	// 	}
+
+	// 	log.Println("Success !")
+	// }
+
+	// _, err = db.Query("SELECT TB_SLEEP(5) FROM DUAL")
+	// if err != nil {
+	// log.Fatal(err)
+	// }
+
+}
